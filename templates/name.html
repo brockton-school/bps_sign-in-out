@@ -6,6 +6,13 @@
     <title>Enter Name</title>
     <!-- Link to external stylesheet -->
     <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+
+    <!-- Make text field focused by default -->
+    <script>
+        window.onload = function() {
+            document.getElementById("name-input").focus();
+        };
+    </script>
 </head>
 <body>
     <!-- "X" Reset Button -->

@@ -5,8 +5,12 @@ from google.oauth2.service_account import Credentials
 from flask import Flask, render_template, request, redirect, url_for
 from datetime import datetime  # Import datetime module
 import pytz  # Import pytz to handle timezones
+from werkzeug.middleware.proxy_fix import ProxyFix
 
 app = Flask(__name__)
+
+# Add ProxyFix middleware to handle reverse proxy headers
+app.wsgi_app = ProxyFix(app.wsgi_app, x_for=1, x_proto=1, x_host=1, x_port=1, x_prefix=1)
 
 # Authenticate with Google Sheets API
 SCOPES = ['https://www.googleapis.com/auth/spreadsheets']
