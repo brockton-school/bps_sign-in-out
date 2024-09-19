@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Select User Type</title>
+    <!-- Link to external stylesheet -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <!-- "X" Reset Button -->
+    <a href="/" class="reset-btn">X</a>
+    
+    <h1>Select User Type</h1>
+    <form action="/name" method="POST">
+        <button name="user_type" value="Student">Student</button>
+        <button name="user_type" value="Staff">Staff</button>
+    </form>
+</body>
+</html>
