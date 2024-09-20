@@ -5,14 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Submission Successful</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
-    <script>
-        // Automatically redirect to home after 2 seconds
-        setTimeout(function() {
-            window.location.href = "/";
-        }, 2000);
-    </script>
+    <script src="{{ url_for('static', filename='scripts.js') }}"></script>
 </head>
-<body>
+<body onload="redirectToHome()">
     <div class="confirmation-body">
         <div class="confirmation-message">
             Submission Successful!<br>

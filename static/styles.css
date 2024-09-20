@@ -67,6 +67,15 @@ input[type="text"] {
     background-color: #bb4547;
 }
 
+/* Hide reason field and action buttons initially */
+#reason-field {
+    display: none;
+}
+
+#action-buttons {
+    display: block;
+}
+
 /* Styles for Conf page */
 .confirmation-body {
     display: flex;

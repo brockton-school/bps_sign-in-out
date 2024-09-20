@@ -5,51 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sign In or Sign Out</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
-    <style>
-        /* Hide reason field and action buttons initially */
-        #reason-field {
-            display: none;
-        }
-
-        #action-buttons {
-            display: block;
-        }
-    </style>
-    <script>
-        // Show reason field only if user is a student and signing out, and hide action buttons
-        function handleAction(action) {
-            var userType = "{{ user_type }}";
-            var reasonField = document.getElementById("reason-field");
-            var actionButtons = document.getElementById("action-buttons");
-
-            // Set the action in the form and handle the display of the reason field
-            document.getElementById('action-input').value = action;
-
-            if (userType === "Student" && action === "Signing Out") {
-                reasonField.style.display = "block";
-                actionButtons.style.display = "none";  // Hide the Sign In/Out buttons
-            } else {
-                reasonField.style.display = "none";
-                document.getElementById('reason-input').value = ""; // Clear any existing reason
-                document.forms['signForm'].submit();  // Automatically submit the form
-            }
-        }
-
-        // Function to set the reason when a reason button is clicked
-        function setReason(reason) {
-            document.getElementById('reason-input').value = reason;
-            document.forms['signForm'].submit();  // Submit form when reason is selected
-        }
-
-        // Function to submit the form on Enter key
-        function submitOnEnter(event) {
-            if (event.key === "Enter") {
-                event.preventDefault();  // Prevent the default form submission behavior
-                const otherReason = document.getElementById('other-reason-input').value;
-                setReason(otherReason);  // Set the reason and submit the form
-            }
-        }
-    </script>
+    <script src="{{ url_for('static', filename='scripts.js') }}"></script>
 </head>
 <body>
     <!-- "X" Reset Button -->
@@ -65,8 +21,8 @@
 
         <!-- Sign In / Sign Out buttons -->
         <div id="action-buttons">
-            <button type="button" class="action-btn" onclick="handleAction('Signing In')">Signing In</button>
-            <button type="button" class="action-btn" onclick="handleAction('Signing Out')">Signing Out</button>
+            <button type="button" class="action-btn" onclick="handleAction('Signing In', '{{ user_type }}')">Signing In</button>
+            <button type="button" class="action-btn" onclick="handleAction('Signing Out', '{{ user_type }}')">Signing Out</button>
         </div>
 
         <!-- Reason Field (hidden initially) -->
