@@ -44,6 +44,8 @@ GOOGLE_CREDENTIALS_PATH=/app/credentials.json
 LOCAL_GOOGLE_CREDENTIALS_PATH=/system-path/to/your-credentials.json
 ```
 
+⚠️ **Warning:** This repository is public, ensure secrets, keys, and anything identifiable are not commited to the code base. 
+
 ### 🚀 Running the App
 
 #### 1. 🏗 Build and Run with Docker
