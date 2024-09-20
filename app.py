@@ -81,8 +81,8 @@ def submit():
     # Append the data to the sheet (including reason if provided)
     worksheet.append_row([user_type, name, action, current_date, current_time_formatted, reason])
 
-    # After submission, redirect back to the start
-    return redirect(url_for('index'))
+    # Render the confirmation page after submission
+    return render_template('confirmation.html')
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000)

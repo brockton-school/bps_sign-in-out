@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Submission Successful</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <script>
+        // Automatically redirect to home after 2 seconds
+        setTimeout(function() {
+            window.location.href = "/";
+        }, 2000);
+    </script>
+</head>
+<body>
+    <div class="confirmation-body">
+        <div class="confirmation-message">
+            Submission Successful!<br>
+        </div>
+    </div>
+</body>
+</html>

@@ -66,3 +66,23 @@ input[type="text"] {
 .reset-btn:hover {
     background-color: #bb4547;
 }
+
+/* Styles for Conf page */
+.confirmation-body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: white;
+    font-family: Arial, sans-serif;
+    text-align: center;
+}
+
+.confirmation-message {
+    background-color: #4CAF50;
+    color: white;
+    padding: 20px;
+    border-radius: 10px;
+    font-size: 24px;
+    font-weight: bold;
+}
