@@ -11,6 +11,16 @@ from dotenv import load_dotenv
 GOOGLE_SHEET_ID = os.getenv('GOOGLE_SHEET_ID')
 SERVICE_ACCOUNT_FILE = os.getenv('GOOGLE_CREDENTIALS_PATH')
 
+# Define constants for column indices (0-based indexing)
+COLUMN_DATE = 0       # A
+COLUMN_TIME = 1       # B
+COLUMN_NAME = 2       # C
+COLUMN_ACTION = 3     # D
+COLUMN_USER_TYPE = 4  # E
+COLUMN_REASON = 5     # F
+
+COLUMN_HEADERS_ARRAY = ["Date", "Time", "Name", "Action", "User Type", "Reason"]
+
 # Define preset options for the "reason"
 SIGN_OUT_REASONS = ["Lunch", "Sick", "Appointment"]
 
@@ -33,7 +43,7 @@ def get_or_create_sheet(spreadsheet, sheet_name):
         worksheet = spreadsheet.worksheet(sheet_name)
     except gspread.exceptions.WorksheetNotFound:
         worksheet = spreadsheet.add_worksheet(title=sheet_name, rows="100", cols="6")
-        worksheet.append_row(["User Type", "Name", "Action", "Date", "Time", "Reason"])  # Add headers
+        worksheet.append_row(COLUMN_HEADERS_ARRAY)  # Add headers
 
         # Bold the header row and freeze it
         bold_format = {
@@ -52,6 +62,7 @@ def get_or_create_sheet(spreadsheet, sheet_name):
             }
         }
 
+        # Freeze the first row
         freeze_row_request = {
             "updateSheetProperties": {
                 "properties": {
@@ -64,6 +75,43 @@ def get_or_create_sheet(spreadsheet, sheet_name):
             }
         }
 
+        # Bold the Name and Time columns
+        bold_name_time_columns = {
+            "repeatCell": {
+                "range": {
+                    "sheetId": worksheet.id,
+                    "startRowIndex": 1,  # From the second row (after headers)
+                    "endRowIndex": 100,  # Apply to the rest of the rows
+                    "startColumnIndex": COLUMN_NAME,  # Name column
+                    "endColumnIndex": COLUMN_NAME + 1  # Apply to Name column
+                },
+                "cell": {
+                    "userEnteredFormat": {
+                        "textFormat": {"bold": True}
+                    }
+                },
+                "fields": "userEnteredFormat.textFormat.bold"
+            }
+        }
+
+        bold_time_column = {
+            "repeatCell": {
+                "range": {
+                    "sheetId": worksheet.id,
+                    "startRowIndex": 1,  # From the second row (after headers)
+                    "endRowIndex": 100,  # Apply to the rest of the rows
+                    "startColumnIndex": COLUMN_TIME,  # Time column
+                    "endColumnIndex": COLUMN_TIME + 1  # Apply to Time column
+                },
+                "cell": {
+                    "userEnteredFormat": {
+                        "textFormat": {"bold": True}
+                    }
+                },
+                "fields": "userEnteredFormat.textFormat.bold"
+            }
+        }
+
         # Conditional formatting for Action column (sign-ins green, sign-outs red)
         conditional_formatting_action = {
             "addConditionalFormatRule": {
@@ -71,8 +119,8 @@ def get_or_create_sheet(spreadsheet, sheet_name):
                     "ranges": [
                         {
                             "sheetId": worksheet.id,
-                            "startColumnIndex": 2,  # Action column (column C)
-                            "endColumnIndex": 3
+                            "startColumnIndex": COLUMN_ACTION,  # Action column
+                            "endColumnIndex": COLUMN_ACTION + 1
                         }
                     ],
                     "booleanRule": {
@@ -95,8 +143,8 @@ def get_or_create_sheet(spreadsheet, sheet_name):
                     "ranges": [
                         {
                             "sheetId": worksheet.id,
-                            "startColumnIndex": 2,  # Action column (column C)
-                            "endColumnIndex": 3
+                            "startColumnIndex": COLUMN_ACTION,  # Action column
+                            "endColumnIndex": COLUMN_ACTION + 1
                         }
                     ],
                     "booleanRule": {
@@ -120,8 +168,8 @@ def get_or_create_sheet(spreadsheet, sheet_name):
                     "ranges": [
                         {
                             "sheetId": worksheet.id,
-                            "startColumnIndex": 0,  # User Type column (column A)
-                            "endColumnIndex": 1
+                            "startColumnIndex": COLUMN_USER_TYPE,  # User Type column
+                            "endColumnIndex": COLUMN_USER_TYPE + 1
                         }
                     ],
                     "booleanRule": {
@@ -144,8 +192,8 @@ def get_or_create_sheet(spreadsheet, sheet_name):
                     "ranges": [
                         {
                             "sheetId": worksheet.id,
-                            "startColumnIndex": 0,  # User Type column (column A)
-                            "endColumnIndex": 1
+                            "startColumnIndex": COLUMN_USER_TYPE,  # User Type column
+                            "endColumnIndex": COLUMN_USER_TYPE + 1
                         }
                     ],
                     "booleanRule": {
@@ -167,6 +215,8 @@ def get_or_create_sheet(spreadsheet, sheet_name):
             "requests": [
                 bold_format,
                 freeze_row_request,
+                bold_name_time_columns,
+                bold_time_column,
                 conditional_formatting_action,
                 conditional_formatting_sign_out,
                 conditional_formatting_user_type,
@@ -175,7 +225,6 @@ def get_or_create_sheet(spreadsheet, sheet_name):
         })
 
     return worksheet
-
 
 
 
@@ -221,7 +270,7 @@ def submit():
     worksheet = get_or_create_sheet(spreadsheet, sheet_name)
 
     # Append the data to the sheet (including reason if provided)
-    worksheet.append_row([user_type, name, action, current_date, current_time_formatted, reason])
+    worksheet.append_row([current_date, current_time_formatted, name, action, user_type, reason])
 
     # Fix the grammar of the action: "Signing In" -> "Signed In" and "Signing Out" -> "Signed Out"
     if action == "Signing In":
