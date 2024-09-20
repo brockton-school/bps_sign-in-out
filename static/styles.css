@@ -44,7 +44,7 @@ input[type="text"] {
 
 /* Reset button styling */
 .reset-btn {
-    position: absolute;
+    position: fixed;  /* Fixed positioning so it stays in the top-left corner */
     top: 10px;
     left: 10px;
     background-color: #FF6347; /* Lighter red */
@@ -60,6 +60,7 @@ input[type="text"] {
     align-items: center;
     justify-content: center;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+    z-index: 1000;  /* Ensure the button stays on top of other content */
 }
 
 .reset-btn:hover {
