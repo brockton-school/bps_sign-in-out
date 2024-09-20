@@ -1,7 +1,7 @@
 body {
     background-color: #ffffff;
     color: #bb2023;
-    font-family: Arial, sans-serif;
+    font-family: 'Nunito Sans', sans-serif;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -13,6 +13,7 @@ body {
 
 h1 {
     margin-bottom: 20px;
+    font-weight: 700;  /* Bold */
 }
 
 form {
