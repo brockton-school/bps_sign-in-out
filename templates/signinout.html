@@ -4,19 +4,116 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sign In or Sign Out</title>
-    <!-- Link to external stylesheet -->
     <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <style>
+        /* Style large buttons for sign-in/out */
+        /*.action-btn {
+            width: 100%;
+            height: 100px;
+            margin: 10px 0;
+            background-color: #FF6347;
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 24px;
+        }
+
+        .action-btn:hover {
+            background-color: #FF4500;
+        }*/
+
+        /* Style buttons for selecting reasons */
+        /*.reason-btn {
+            width: 100%;
+            height: 50px;
+            margin: 5px 0;
+            background-color: #90EE90;
+            color: black;
+            border: none;
+            border-radius: 8px;
+            font-size: 18px;
+        }
+
+        .reason-btn:hover {
+            background-color: #32CD32;
+        }*/
+
+        /* Hide reason field and action buttons initially */
+        #reason-field {
+            display: none;
+        }
+
+        #action-buttons {
+            display: block;
+        }
+    </style>
+    <script>
+        // Show reason field only if user is a student and signing out, and hide action buttons
+        function handleAction(action) {
+            var userType = "{{ user_type }}";
+            var reasonField = document.getElementById("reason-field");
+            var actionButtons = document.getElementById("action-buttons");
+
+            // Set the action in the form and handle the display of the reason field
+            document.getElementById('action-input').value = action;
+
+            if (userType === "Student" && action === "Signing Out") {
+                reasonField.style.display = "block";
+                actionButtons.style.display = "none";  // Hide the Sign In/Out buttons
+            } else {
+                reasonField.style.display = "none";
+                document.getElementById('reason-input').value = ""; // Clear any existing reason
+                document.forms['signForm'].submit();  // Automatically submit the form
+            }
+        }
+
+        // Function to set the reason when a reason button is clicked
+        function setReason(reason) {
+            document.getElementById('reason-input').value = reason;
+            document.forms['signForm'].submit();  // Submit form when reason is selected
+        }
+
+        // Function to submit the form on Enter key
+        function submitOnEnter(event) {
+            if (event.key === "Enter") {
+                event.preventDefault();  // Prevent the default form submission behavior
+                const otherReason = document.getElementById('other-reason-input').value;
+                setReason(otherReason);  // Set the reason and submit the form
+            }
+        }
+    </script>
 </head>
 <body>
     <!-- "X" Reset Button -->
     <a href="/" class="reset-btn">X</a>
-    
-    <h1>Sign In or Sign Out</h1>
-    <form action="/submit" method="POST">
+
+
+    <h1>Are you signing in or out?</h1>
+    <form id="signForm" action="/submit" method="POST">
         <input type="hidden" name="name" value="{{ name }}">
         <input type="hidden" name="user_type" value="{{ user_type }}">
-        <button name="action" value="Signing In" style="width:100%; height:100px;">Signing In</button>
-        <button name="action" value="Signing Out" style="width:100%; height:100px;">Signing Out</button>
+        <input type="hidden" id="action-input" name="action" value="">
+        <input type="hidden" id="reason-input" name="reason" value="">
+
+        <!-- Sign In / Sign Out buttons -->
+        <div id="action-buttons">
+            <button type="button" class="action-btn" onclick="handleAction('Signing In')">Signing In</button>
+            <button type="button" class="action-btn" onclick="handleAction('Signing Out')">Signing Out</button>
+        </div>
+
+        <!-- Reason Field (hidden initially) -->
+        <div id="reason-field">
+            <h3>Reason for Signing Out (Students Only)</h3>
+
+            <!-- Loop through the reasons and render them as buttons -->
+            {% for reason in reasons %}
+                <button type="button" class="reason-btn" onclick="setReason('{{ reason }}')">{{ reason }}</button>
+            {% endfor %}
+            
+            <br>
+            <label>Other reason:</label>
+            <input type="text" id="other-reason-input" name="other_reason" placeholder="Enter your reason" onkeydown="submitOnEnter(event)">
+        </div>
     </form>
 </body>
 </html>

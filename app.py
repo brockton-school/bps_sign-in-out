@@ -11,6 +11,9 @@ from dotenv import load_dotenv
 GOOGLE_SHEET_ID = os.getenv('GOOGLE_SHEET_ID')
 SERVICE_ACCOUNT_FILE = os.getenv('GOOGLE_CREDENTIALS_PATH')
 
+# Define preset options for the "reason"
+SIGN_OUT_REASONS = ["Lunch", "Sick", "Appointment"]
+
 app = Flask(__name__)
 
 # Add ProxyFix middleware to handle reverse proxy headers
@@ -30,8 +33,8 @@ def get_or_create_sheet(spreadsheet, sheet_name):
         worksheet = spreadsheet.worksheet(sheet_name)  # Try to open the sheet
     except gspread.exceptions.WorksheetNotFound:
         # If the sheet doesn't exist, create it and set up the headers
-        worksheet = spreadsheet.add_worksheet(title=sheet_name, rows="100", cols="5")
-        worksheet.append_row(["User Type", "Name", "Action", "Date", "Time"])  # Add headers
+        worksheet = spreadsheet.add_worksheet(title=sheet_name, rows="100", cols="6")
+        worksheet.append_row(["User Type", "Name", "Action", "Date", "Time", "Reason"])  # Add headers
     return worksheet
 
 @app.route('/')
@@ -47,22 +50,26 @@ def name():
 def signinout():
     name = request.form['name']
     user_type = request.form['user_type']
-    return render_template('signinout.html', name=name, user_type=user_type)
+    return render_template('signinout.html', name=name, user_type=user_type, reasons=SIGN_OUT_REASONS)
 
 @app.route('/submit', methods=['POST'])
 def submit():
     action = request.form['action']
     name = request.form['name']
     user_type = request.form['user_type']
+    
+    # Capture reason, prioritize "other_reason" if provided
+    reason = request.form.get('reason', '')
+    other_reason = request.form.get('other_reason', '')
+    if other_reason:
+        reason = other_reason
 
     # Define the Vancouver time zone
     vancouver_tz = pytz.timezone('America/Vancouver')
-    
+
     # Get the current date and time in Vancouver time zone
     current_time = datetime.now(vancouver_tz)
-    
-    # Separate the date and time
-    current_date = current_time.strftime('%Y-%m-%d')
+    current_date = current_time.strftime('%Y-%m-%d')  # Format date as YYYY-MM-DD
     current_time_formatted = current_time.strftime('%I:%M %p')  # 1:29 PM format
 
     # Use the current date as the sheet name (e.g., "2024-09-20")
@@ -71,8 +78,8 @@ def submit():
     # Get the sheet for the current date or create one if it doesn't exist
     worksheet = get_or_create_sheet(spreadsheet, sheet_name)
 
-    # Append the data to the sheet
-    worksheet.append_row([user_type, name, action, current_date, current_time_formatted])
+    # Append the data to the sheet (including reason if provided)
+    worksheet.append_row([user_type, name, action, current_date, current_time_formatted, reason])
 
     # After submission, redirect back to the start
     return redirect(url_for('index'))
