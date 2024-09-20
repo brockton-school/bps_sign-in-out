@@ -19,7 +19,17 @@ CREDS = Credentials.from_service_account_file('splendid-sunset-436122-n9-2a123c0
 # Connect to the Google Sheet
 gc = gspread.authorize(CREDS)
 spreadsheet_id = '1E23LKIu2Rcq6vTf2QNg3SVgMTkVaefLiMs4AEjssuA0'
-sheet = gc.open_by_key(spreadsheet_id).sheet1  # Assuming first sheet
+spreadsheet = gc.open_by_key(spreadsheet_id)
+
+def get_or_create_sheet(spreadsheet, sheet_name):
+    """Check if a sheet with the given name exists, otherwise create it."""
+    try:
+        worksheet = spreadsheet.worksheet(sheet_name)  # Try to open the sheet
+    except gspread.exceptions.WorksheetNotFound:
+        # If the sheet doesn't exist, create it and set up the headers
+        worksheet = spreadsheet.add_worksheet(title=sheet_name, rows="100", cols="5")
+        worksheet.append_row(["User Type", "Name", "Action", "Date", "Time"])  # Add headers
+    return worksheet
 
 @app.route('/')
 def index():
@@ -52,8 +62,14 @@ def submit():
     current_date = current_time.strftime('%Y-%m-%d')
     current_time_formatted = current_time.strftime('%I:%M %p')  # 1:29 PM format
 
-    # Append the data to the Google Sheet, including the current date and time
-    sheet.append_row([current_date, current_time_formatted, user_type, name, action])
+    # Use the current date as the sheet name (e.g., "2024-09-20")
+    sheet_name = current_date
+
+    # Get the sheet for the current date or create one if it doesn't exist
+    worksheet = get_or_create_sheet(spreadsheet, sheet_name)
+
+    # Append the data to the sheet
+    worksheet.append_row([user_type, name, action, current_date, current_time_formatted])
 
     # After submission, redirect back to the start
     return redirect(url_for('index'))
