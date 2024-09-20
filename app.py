@@ -81,8 +81,14 @@ def submit():
     # Append the data to the sheet (including reason if provided)
     worksheet.append_row([user_type, name, action, current_date, current_time_formatted, reason])
 
-    # Render the confirmation page after submission
-    return render_template('confirmation.html')
+    # Fix the grammar of the action: "Signing In" -> "Signed In" and "Signing Out" -> "Signed Out"
+    if action == "Signing In":
+        action_text = "signed in"
+    elif action == "Signing Out":
+        action_text = "signed out"
+    
+    # Pass the corrected action text and name to the confirmation page
+    return render_template('confirmation.html', name=name, action_text=action_text)
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000)
