@@ -31,7 +31,8 @@ This is a Flask-based web form app that allows users to select their role (Stude
 You need to set the following environment variables:
 
 - `GOOGLE_SHEET_ID`: The ID of the Google Sheet (found in the sheet's URL).
-- `GOOGLE_CREDENTIALS_PATH`: The path to your Google Sheets API credentials JSON file.
+- `GOOGLE_CREDENTIALS_PATH`: The path to your Google Sheets API credentials JSON file within the container.
+- `LOCAL_GOOGLE_CREDENTIALS_PATH`: The absolute path to your Google Sheets API credentials JSON file on your system.
 
 ### 📁 .env File (Optional for Local Development)
 
@@ -39,7 +40,8 @@ You can create a `.env` file in the project root to store your environment varia
 
 ```bash
 GOOGLE_SHEET_ID=your_google_sheet_id
-GOOGLE_CREDENTIALS_PATH=/path/to/your-credentials.json
+GOOGLE_CREDENTIALS_PATH=/app/credentials.json
+LOCAL_GOOGLE_CREDENTIALS_PATH=/system-path/to/your-credentials.json
 ```
 
 ### 🚀 Running the App
@@ -87,17 +89,3 @@ http://localhost:5000
 
 This project is licensed under the MIT License.
 ```
-
-### Explanation of Emojis:
-- 🚪 for the entrance to the app.
-- ✨ to highlight the features section.
-- ⚙️ for setup and configuration.
-- 🧑‍💻 and 🌟 for steps in setting up the Google Sheets API.
-- 🔑 for environment variables.
-- 📁 for the `.env` file.
-- 🚀 for running the app.
-- 🏗 and 🛠 for building and running the app.
-- 🌐 for accessing the app.
-- 📄 for the license section.
-
-This version is much more lively and engaging with the use of emojis. Let me know if you’d like to make any further tweaks!
