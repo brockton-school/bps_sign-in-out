@@ -1,6 +1,6 @@
 body {
-    background-color: #8B0000; /* Dark red */
-    color: white;
+    background-color: #ffffff;
+    color: #bb2023;
     font-family: Arial, sans-serif;
     display: flex;
     flex-direction: column;
@@ -23,7 +23,7 @@ form {
 }
 
 button, input[type="text"] {
-    background-color: #FF6347; /* Lighter red */
+    background-color: #bb2023; 
     color: white;
     border: none;
     border-radius: 12px;
@@ -35,7 +35,7 @@ button, input[type="text"] {
 }
 
 button:hover {
-    background-color: #FF4500; /* Slightly darker red on hover */
+    background-color: #bb4547; /* Slightly darker red on hover */
 }
 
 input[type="text"] {
@@ -47,7 +47,7 @@ input[type="text"] {
     position: fixed;  /* Fixed positioning so it stays in the top-left corner */
     top: 10px;
     left: 10px;
-    background-color: #FF6347; /* Lighter red */
+    background-color: #bb2023;
     color: white;
     font-size: 24px;
     font-weight: bold;
@@ -64,5 +64,5 @@ input[type="text"] {
 }
 
 .reset-btn:hover {
-    background-color: #FF4500; /* Slightly darker red on hover */
+    background-color: #bb4547;
 }
