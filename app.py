@@ -1,11 +1,15 @@
 import gspread
 import os
-import json
 from google.oauth2.service_account import Credentials
 from flask import Flask, render_template, request, redirect, url_for
 from datetime import datetime  # Import datetime module
 import pytz  # Import pytz to handle timezones
 from werkzeug.middleware.proxy_fix import ProxyFix
+from dotenv import load_dotenv
+
+# Load environment variables for Google Sheets ID and Credentials JSON path
+GOOGLE_SHEET_ID = os.getenv('GOOGLE_SHEET_ID')
+SERVICE_ACCOUNT_FILE = os.getenv('GOOGLE_CREDENTIALS_PATH')
 
 app = Flask(__name__)
 
@@ -14,12 +18,11 @@ app.wsgi_app = ProxyFix(app.wsgi_app, x_for=1, x_proto=1, x_host=1, x_port=1, x_
 
 # Authenticate with Google Sheets API
 SCOPES = ['https://www.googleapis.com/auth/spreadsheets']
-CREDS = Credentials.from_service_account_file('splendid-sunset-436122-n9-2a123c008b07.json', scopes=SCOPES)
+CREDS = Credentials.from_service_account_file(SERVICE_ACCOUNT_FILE, scopes=SCOPES)
 
 # Connect to the Google Sheet
 gc = gspread.authorize(CREDS)
-spreadsheet_id = '1E23LKIu2Rcq6vTf2QNg3SVgMTkVaefLiMs4AEjssuA0'
-spreadsheet = gc.open_by_key(spreadsheet_id)
+spreadsheet = gc.open_by_key(GOOGLE_SHEET_ID)
 
 def get_or_create_sheet(spreadsheet, sheet_name):
     """Check if a sheet with the given name exists, otherwise create it."""

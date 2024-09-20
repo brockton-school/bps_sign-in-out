@@ -1,0 +1,13 @@
+version: '3.7'
+
+services:
+  webform:
+    build: .
+    ports:
+      - "5000:5000"
+    environment:
+      - GOOGLE_SHEET_ID=${GOOGLE_SHEET_ID}
+      - GOOGLE_CREDENTIALS_PATH=${GOOGLE_CREDENTIALS_PATH}
+    volumes:
+      - ${LOCAL_GOOGLE_CREDENTIALS_PATH}:${GOOGLE_CREDENTIALS_PATH}
+

@@ -3,3 +3,4 @@ gspread
 google-auth
 pytz==2023.3
 werkzeug
+python-dotenv
