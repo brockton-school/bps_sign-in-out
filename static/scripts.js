@@ -2,7 +2,7 @@
 function redirectToHome() {
     setTimeout(function() {
         window.location.href = "/";
-    }, 3000);
+    }, 2000);
 }
 
 // Show reason field only if user is a student and signing out, and hide action buttons

@@ -30,12 +30,154 @@ spreadsheet = gc.open_by_key(GOOGLE_SHEET_ID)
 def get_or_create_sheet(spreadsheet, sheet_name):
     """Check if a sheet with the given name exists, otherwise create it."""
     try:
-        worksheet = spreadsheet.worksheet(sheet_name)  # Try to open the sheet
+        worksheet = spreadsheet.worksheet(sheet_name)
     except gspread.exceptions.WorksheetNotFound:
-        # If the sheet doesn't exist, create it and set up the headers
         worksheet = spreadsheet.add_worksheet(title=sheet_name, rows="100", cols="6")
         worksheet.append_row(["User Type", "Name", "Action", "Date", "Time", "Reason"])  # Add headers
+
+        # Bold the header row and freeze it
+        bold_format = {
+            "repeatCell": {
+                "range": {
+                    "sheetId": worksheet.id,
+                    "startRowIndex": 0,
+                    "endRowIndex": 1  # The first row
+                },
+                "cell": {
+                    "userEnteredFormat": {
+                        "textFormat": {"bold": True}
+                    }
+                },
+                "fields": "userEnteredFormat.textFormat.bold"
+            }
+        }
+
+        freeze_row_request = {
+            "updateSheetProperties": {
+                "properties": {
+                    "sheetId": worksheet.id,
+                    "gridProperties": {
+                        "frozenRowCount": 1  # Freeze the first row
+                    }
+                },
+                "fields": "gridProperties.frozenRowCount"
+            }
+        }
+
+        # Conditional formatting for Action column (sign-ins green, sign-outs red)
+        conditional_formatting_action = {
+            "addConditionalFormatRule": {
+                "rule": {
+                    "ranges": [
+                        {
+                            "sheetId": worksheet.id,
+                            "startColumnIndex": 2,  # Action column (column C)
+                            "endColumnIndex": 3
+                        }
+                    ],
+                    "booleanRule": {
+                        "condition": {
+                            "type": "TEXT_EQ",
+                            "values": [{"userEnteredValue": "Signing In"}]
+                        },
+                        "format": {
+                            "backgroundColor": {"red": 0.8, "green": 1, "blue": 0.8}
+                        }
+                    }
+                },
+                "index": 0
+            }
+        }
+
+        conditional_formatting_sign_out = {
+            "addConditionalFormatRule": {
+                "rule": {
+                    "ranges": [
+                        {
+                            "sheetId": worksheet.id,
+                            "startColumnIndex": 2,  # Action column (column C)
+                            "endColumnIndex": 3
+                        }
+                    ],
+                    "booleanRule": {
+                        "condition": {
+                            "type": "TEXT_EQ",
+                            "values": [{"userEnteredValue": "Signing Out"}]
+                        },
+                        "format": {
+                            "backgroundColor": {"red": 1, "green": 0.8, "blue": 0.8}
+                        }
+                    }
+                },
+                "index": 1
+            }
+        }
+
+        # Conditional formatting for User Type column (staff yellow, students blue)
+        conditional_formatting_user_type = {
+            "addConditionalFormatRule": {
+                "rule": {
+                    "ranges": [
+                        {
+                            "sheetId": worksheet.id,
+                            "startColumnIndex": 0,  # User Type column (column A)
+                            "endColumnIndex": 1
+                        }
+                    ],
+                    "booleanRule": {
+                        "condition": {
+                            "type": "TEXT_EQ",
+                            "values": [{"userEnteredValue": "Staff"}]
+                        },
+                        "format": {
+                            "backgroundColor": {"red": 1, "green": 1, "blue": 0.8}  # Light yellow
+                        }
+                    }
+                },
+                "index": 0
+            }
+        }
+
+        conditional_formatting_student = {
+            "addConditionalFormatRule": {
+                "rule": {
+                    "ranges": [
+                        {
+                            "sheetId": worksheet.id,
+                            "startColumnIndex": 0,  # User Type column (column A)
+                            "endColumnIndex": 1
+                        }
+                    ],
+                    "booleanRule": {
+                        "condition": {
+                            "type": "TEXT_EQ",
+                            "values": [{"userEnteredValue": "Student"}]
+                        },
+                        "format": {
+                            "backgroundColor": {"red": 0.8, "green": 0.8, "blue": 1}  # Light blue
+                        }
+                    }
+                },
+                "index": 1
+            }
+        }
+
+        # Apply the formatting requests and conditional formatting in a single batch update
+        spreadsheet.batch_update({
+            "requests": [
+                bold_format,
+                freeze_row_request,
+                conditional_formatting_action,
+                conditional_formatting_sign_out,
+                conditional_formatting_user_type,
+                conditional_formatting_student
+            ]
+        })
+
     return worksheet
+
+
+
 
 @app.route('/')
 def index():
