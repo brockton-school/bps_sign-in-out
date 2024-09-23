@@ -1,4 +1,4 @@
-# 🚪 Brockton Sign In/Out Form
+# 🚪 BPS Paperless Sign In/Out Tool
 
 This is a Flask-based web form app that allows users to select their role (Student or Staff), input their name, and log whether they are signing in or signing out. The app records this information in a Google Sheet 📊.
 
