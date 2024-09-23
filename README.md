@@ -6,7 +6,7 @@ This is a Flask-based web form app that allows users to select their role (Stude
 
 - 👥 **User Type Selection**: Choose between "Student" and "Staff."
 - 📝 **Name Input**: Enter your name.
-- 🔄 **Sign In/Sign Out**: Choose whether you're signing in or out.
+- 🔄 **Sign In/Sign Out**: Choose whether you're signing in or out. If the user is a Student, they will need to provide a sign out reason.
 - 📅 **Daily Logs**: Each day gets a new sheet in Google Sheets, and all activity for that day is recorded there.
 
 ## ⚙️ Setup
