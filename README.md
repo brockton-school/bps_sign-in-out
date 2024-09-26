@@ -90,3 +90,9 @@ http://localhost:5000
 ## 📄 License
 
 This project is licensed under the MIT License.
+
+
+# TODO
+- Staff reason and return time
+- students grade and prefilled names
+- Add visitor options
