@@ -52,7 +52,7 @@ LOCAL_GOOGLE_CREDENTIALS_PATH=/system-path/to/your-credentials.json
 
 1. Clone the repository:
     ```bash
-    git clone <repository-url>
+    git clone https://github.com/alanross17/bps_sigin-in-out.git
     ```
 
 2. Build the Docker container:
@@ -92,7 +92,7 @@ http://localhost:5000
 This project is licensed under the MIT License.
 
 
-# TODO
+# 📝 TODO
 - Staff reason and return time
 - students grade and prefilled names
 - Add visitor options
