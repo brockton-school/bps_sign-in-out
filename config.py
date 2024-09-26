@@ -10,9 +10,10 @@ COLUMN_TIME = 1       # B
 COLUMN_NAME = 2       # C
 COLUMN_ACTION = 3     # D
 COLUMN_USER_TYPE = 4  # E
-COLUMN_REASON = 5     # F
+COLUMN_GRADE = 5      # F
+COLUMN_REASON = 6     # G
 
-COLUMN_HEADERS_ARRAY = ["Date", "Time", "Name", "Action", "User Type", "Reason"]
+COLUMN_HEADERS_ARRAY = ["Date", "Time", "Name", "Action", "User Type", "Grade", "Reason"]
 
 # Define preset options for the "reason"
 SIGN_OUT_REASONS = ["Lunch", "Sick", "Appointment"]

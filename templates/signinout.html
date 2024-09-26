@@ -13,16 +13,13 @@
     <script src="{{ url_for('static', filename='scripts.js') }}"></script>
 </head>
 <body>
-    <!-- "X" Reset Button -->
-    <a href="/" class="reset-btn">X</a>
-
-
-    <h1>Are you signing in or out?</h1>
+    <h1>Sign In or Sign Out</h1>
     <form id="signForm" action="/submit" method="POST">
         <input type="hidden" name="name" value="{{ name }}">
         <input type="hidden" name="user_type" value="{{ user_type }}">
         <input type="hidden" id="action-input" name="action" value="">
         <input type="hidden" id="reason-input" name="reason" value="">
+        <input type="hidden" name="grade" value="{{ grade }}">  <!-- Add the grade field if applicable -->
 
         <!-- Sign In / Sign Out buttons -->
         <div id="action-buttons">

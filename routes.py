@@ -8,6 +8,9 @@ from config import SIGN_OUT_REASONS
 
 main_bp = Blueprint('main', __name__)
 
+# Define available grades
+GRADES = ["Grade 9", "Grade 10", "Grade 11", "Grade 12"]
+
 @main_bp.route('/')
 def index():
     return render_template('index.html')
@@ -15,19 +18,32 @@ def index():
 @main_bp.route('/name', methods=['POST'])
 def name():
     user_type = request.form['user_type']
+    if user_type == "Student":
+        return redirect(url_for('main.grade'))
     return render_template('name.html', user_type=user_type)
+
+@main_bp.route('/grade', methods=['GET', 'POST'])
+def grade():
+    if request.method == 'POST':
+        grade = request.form['grade']
+        name = request.form.get('name', '')
+        return render_template('name.html', user_type="Student", grade=grade)  # Pass grade to next step
+    return render_template('grade.html', grades=GRADES)
 
 @main_bp.route('/signinout', methods=['POST'])
 def signinout():
     name = request.form['name']
     user_type = request.form['user_type']
-    return render_template('signinout.html', name=name, user_type=user_type, reasons=SIGN_OUT_REASONS)
+    grade = request.form.get('grade', '')  # Capture the grade if available
+    return render_template('signinout.html', name=name, user_type=user_type, grade=grade, reasons=SIGN_OUT_REASONS)
+
 
 @main_bp.route('/submit', methods=['POST'])
 def submit():
     action = request.form['action']
     name = request.form['name']
     user_type = request.form['user_type']
+    grade = request.form.get('grade', '')  # Capture the grade if available
     
     reason = request.form.get('reason', '')
     other_reason = request.form.get('other_reason', '')
@@ -44,7 +60,7 @@ def submit():
 
     # Create or get the sheet and append the row
     worksheet = get_or_create_sheet(sheet_name)
-    worksheet.append_row([current_date, current_time_formatted, name, action, user_type, reason])
+    worksheet.append_row([current_date, current_time_formatted, name, action, user_type, grade, reason])
 
     # Render the confirmation page after submission
     action_text = "Signed In" if action == "Signing In" else "Signed Out"
