@@ -92,11 +92,8 @@ http://localhost:5000
 This project is licensed under the MIT License.
 
 
-# 📝 TODO
-- Staff reason and return time
-- students grade and prefilled names
-- Add visitor options
-    - Name
-    - Why youre here
-    - Contact (tel and email)
-    
+## 📝 TODO
+- Staff Reason and Return Time
+- ~~Students Grade~~ and prefilled names
+- Add Branding (Logo, and stuff)
+- Add Footer Identifying Build Version    
