@@ -9,7 +9,7 @@ from config import SIGN_OUT_REASONS
 main_bp = Blueprint('main', __name__)
 
 # Define available grades
-GRADES = ["Grade 9", "Grade 10", "Grade 11", "Grade 12"]
+GRADES = ["Grade 3", "Grade 4", "Grade 5", "Grade 6", "Grade 7", "Grade 8", "Grade 9", "Grade 10", "Grade 11", "Grade 12"]
 
 @main_bp.route('/')
 def index():
