@@ -96,4 +96,5 @@ This project is licensed under the MIT License.
 - Staff Reason and Return Time
 - ~~Students Grade~~ and prefilled names
 - Add Branding (Logo, and stuff)
-- Add Footer Identifying Build Version    
+- Add Footer Identifying Build Version
+- Edit visitor sign out so user can select a previous entry and mark themselves as "out"
