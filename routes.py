@@ -9,9 +9,6 @@ import csv
 
 main_bp = Blueprint('main', __name__)
 
-# Define available grades
-GRADES = ["Grade 3", "Grade 4", "Grade 5", "Grade 6", "Grade 7", "Grade 8", "Grade 9", "Grade 10", "Grade 11", "Grade 12"]
-
 # Function to read grades from the CSV file
 def read_grades_from_csv(file_path):
     grades = []
@@ -79,6 +76,12 @@ def submit():
 
     # Render the confirmation page after submission
     action_text = "Signed In" if action == "Signing In" else "Signed Out"
-    return render_template('confirmation.html', name=name, action_text=action_text)
+    confirmation_text = ""
+    if user_type == "Visitor":
+        confirmation_text = "Sign in successful, please report to the front office."
+    else:
+        confirmation_text = name + " Has Successfully " + action_text
+
+    return render_template('confirmation.html', confirmation_text=confirmation_text)
 
 
