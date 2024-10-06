@@ -5,11 +5,21 @@ from datetime import datetime
 import pytz
 import os
 from config import SIGN_OUT_REASONS
+import csv
 
 main_bp = Blueprint('main', __name__)
 
 # Define available grades
 GRADES = ["Grade 3", "Grade 4", "Grade 5", "Grade 6", "Grade 7", "Grade 8", "Grade 9", "Grade 10", "Grade 11", "Grade 12"]
+
+# Function to read grades from the CSV file
+def read_grades_from_csv(file_path):
+    grades = []
+    with open(file_path, 'r') as csvfile:
+        reader = csv.reader(csvfile)
+        for row in reader:
+            grades.append(row[0])
+    return grades
 
 @main_bp.route('/')
 def index():
@@ -24,11 +34,12 @@ def name():
 
 @main_bp.route('/grade', methods=['GET', 'POST'])
 def grade():
+    grades = read_grades_from_csv('/app/grades.csv')  # Read grades from the mounted CSV file
     if request.method == 'POST':
         grade = request.form['grade']
         name = request.form.get('name', '')
         return render_template('name.html', user_type="Student", grade=grade)  # Pass grade to next step
-    return render_template('grade.html', grades=GRADES)
+    return render_template('grade.html', grades=grades)
 
 @main_bp.route('/signinout', methods=['POST'])
 def signinout():
