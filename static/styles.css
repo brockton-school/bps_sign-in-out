@@ -85,6 +85,10 @@ input[type="text"]:focus {
     display: none;
 }
 
+#visitor-reason {
+    display: none;
+}
+
 #action-buttons {
     display: block;
 }
