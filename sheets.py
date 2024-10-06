@@ -15,7 +15,7 @@ def get_or_create_sheet(sheet_name):
     try:
         worksheet = spreadsheet.worksheet(sheet_name)
     except gspread.exceptions.WorksheetNotFound:
-        worksheet = spreadsheet.add_worksheet(title=sheet_name, rows="100", cols="7")
+        worksheet = spreadsheet.add_worksheet(title=sheet_name, rows="100", cols="8")
         worksheet.append_row(COLUMN_HEADERS_ARRAY)  # Add headers
 
         # Bold the header row and freeze it
