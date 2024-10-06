@@ -20,7 +20,7 @@ form {
     display: flex;
     flex-direction: column;
     width: 100%;
-    max-width: 400px;
+    max-width: 600px;
 }
 
 button, input[type="text"] {
@@ -93,6 +93,11 @@ input[type="text"]:focus {
     display: block;
 }
 
+/* Styles for visitor sign in stuff */
+#visitor-reason h1 {
+    text-align: center;
+}
+
 /* Styles for Conf page */
 .confirmation-body {
     display: flex;
@@ -100,7 +105,7 @@ input[type="text"]:focus {
     align-items: center;
     height: 100vh;
     background-color: white;
-    font-family: Arial, sans-serif;
+    font-family: 'Nunito Sans', sans-serif;
     text-align: center;
 }
 

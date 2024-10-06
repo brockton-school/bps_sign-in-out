@@ -10,6 +10,7 @@ function handleAction(action, userType) {
     var reasonField = document.getElementById("reason-field");
     var actionButtons = document.getElementById("action-buttons");
     var visitorReasonField = document.getElementById("visitor-reason");
+    var header = document.getElementById("sign-in-out-header");
 
     // Set the action in the form and handle the display of the reason field
     document.getElementById('action-input').value = action;
@@ -20,6 +21,7 @@ function handleAction(action, userType) {
     } else if (userType === "Visitor" && action === "Signing In") {
         visitorReasonField.style.display = "block";
         actionButtons.style.display = "none";  // Hide the Sign In/Out buttons
+        header.style.display = "none";
     } else {
         reasonField.style.display = "none";
         document.getElementById('reason-input').value = ""; // Clear any existing reason
