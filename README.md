@@ -96,3 +96,7 @@ This project is licensed under the MIT License.
 - Staff reason and return time
 - students grade and prefilled names
 - Add visitor options
+    - Name
+    - Why youre here
+    - Contact (tel and email)
+    
