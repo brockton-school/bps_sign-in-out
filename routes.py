@@ -29,8 +29,8 @@ def index():
 def name():
     user_type = request.form['user_type']
     if user_type == "Student":
-        return redirect(url_for('main.grade'))
-    return render_template('name.html', user_type=user_type)
+        return redirect(url_for('main.grade'))  # Redirect to grade selection for students
+    return render_template('name.html', user_type=user_type)  # Staff/Visitor flow remains the same
 
 @main_bp.route('/grade', methods=['GET', 'POST'])
 def grade():
@@ -58,8 +58,12 @@ def submit():
     
     reason = request.form.get('reason', '')
     other_reason = request.form.get('other_reason', '')
+    visitor_reason = request.form.get('visitor-reason', '')
+
     if other_reason:
         reason = other_reason
+    elif visitor_reason:
+        reason = visitor_reason
 
     # Get current time in Vancouver timezone
     vancouver_tz = pytz.timezone('America/Vancouver')
@@ -76,3 +80,5 @@ def submit():
     # Render the confirmation page after submission
     action_text = "Signed In" if action == "Signing In" else "Signed Out"
     return render_template('confirmation.html', name=name, action_text=action_text)
+
+

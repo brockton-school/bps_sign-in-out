@@ -9,12 +9,16 @@ function redirectToHome() {
 function handleAction(action, userType) {
     var reasonField = document.getElementById("reason-field");
     var actionButtons = document.getElementById("action-buttons");
+    var visitorReasonField = document.getElementById("visitor-reason");
 
     // Set the action in the form and handle the display of the reason field
     document.getElementById('action-input').value = action;
 
     if (userType === "Student" && action === "Signing Out") {
         reasonField.style.display = "block";
+        actionButtons.style.display = "none";  // Hide the Sign In/Out buttons
+    } else if (userType === "Visitor" && action === "Signing In") {
+        visitorReasonField.style.display = "block";
         actionButtons.style.display = "none";  // Hide the Sign In/Out buttons
     } else {
         reasonField.style.display = "none";
