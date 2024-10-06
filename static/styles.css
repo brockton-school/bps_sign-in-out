@@ -109,18 +109,24 @@ input[type="text"]:focus {
     font-weight: bold;
 }
 
-/* Styles for grades input */
+/* Grid container for the grade buttons */
+.grid-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));  /* Adjusts the number of columns based on screen size */
+    gap: 10px;  /* Space between buttons */
+    justify-items: center;  /* Center the buttons horizontally */
+    margin: 20px 0;
+}
+
+/* Grade button styles */
 .grade-btn {
     width: 100%;
     height: 100px;
-    margin: 10px 0;
-    background-color: #4CAF50;
+    background-color: #bb2023;
     color: white;
     border: none;
     border-radius: 12px;
-    font-size: 24px;
-}
-
-.grade-btn:hover {
-    background-color: #45a049;
+    font-size: 18px;
+    padding: 10px;
+    box-sizing: border-box;
 }
