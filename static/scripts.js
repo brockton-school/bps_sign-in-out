@@ -19,7 +19,7 @@ function handleAction(action, userType) {
         reasonField.style.display = "block";
         actionButtons.style.display = "none";  // Hide the action buttons
         if (action == "Signing In") {
-            document.getElementById("reason-header").value = "Reason for Sign In"
+            document.getElementById("reason-header").innerText = "Reason for Sign In"
         }
     } else if (userType === "Staff" && action === "Signing Out") {
         reasonField.style.display = "block";
@@ -43,12 +43,7 @@ function setReason(reason) {
     var action = document.getElementById('action-input').value
     var userType = document.getElementById('user-type-input').value
 
-    console.log("action: " + action)
-    console.log("user type: " + userType)
-
     if (action === "Signing Out" && userType !== "Visitor") {
-        console.log("inside the conditional!!!")
-
         // Hide the reason fields
         var reasonField = document.getElementById("reason-field");
         reasonField.style.display = "none";
