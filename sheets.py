@@ -1,7 +1,7 @@
 import gspread
 from google.oauth2.service_account import Credentials
 import os
-from config import COLUMN_HEADERS_ARRAY, COLUMN_DATE, COLUMN_ACTION, COLUMN_NAME, COLUMN_REASON, COLUMN_TIME, COLUMN_USER_TYPE, COLUMN_GRADE
+from config import COLUMN_HEADERS_ARRAY, COLUMN_DATE, COLUMN_ACTION, COLUMN_NAME, COLUMN_REASON, COLUMN_TIME, COLUMN_USER_TYPE, COLUMN_GRADE, COLUMN_PHONE, COLUMN_RETURN_TIME, COLUMNS_TOTAL
 
 SCOPES = ['https://www.googleapis.com/auth/spreadsheets']
 SERVICE_ACCOUNT_FILE = os.getenv('GOOGLE_CREDENTIALS_PATH')
@@ -15,7 +15,7 @@ def get_or_create_sheet(sheet_name):
     try:
         worksheet = spreadsheet.worksheet(sheet_name)
     except gspread.exceptions.WorksheetNotFound:
-        worksheet = spreadsheet.add_worksheet(title=sheet_name, rows="100", cols="8")
+        worksheet = spreadsheet.add_worksheet(title=sheet_name, rows="100", cols=COLUMNS_TOTAL)
         worksheet.append_row(COLUMN_HEADERS_ARRAY)  # Add headers
 
         # Bold the header row and freeze it

@@ -80,7 +80,7 @@ input[type="text"]:focus {
     background-color: #bb4547;
 }
 
-/* Hide reason field and action buttons initially */
+/* Hide reason field, visitors, and return times initially */
 #reason-field {
     display: none;
 }
@@ -89,9 +89,15 @@ input[type="text"]:focus {
     display: none;
 }
 
+#return-time {
+    display: none;
+}
+
 #action-buttons {
     display: block;
 }
+
+
 
 /* Styles for visitor sign in stuff */
 #visitor-reason h1 {
