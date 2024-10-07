@@ -13,10 +13,10 @@
     <script src="{{ url_for('static', filename='scripts.js') }}"></script>
 </head>
 <body>
-    <h1 id="sign-in-out-header">Sign In or Sign Out</h1>
+    <h1 id="sign-in-out-header">Are you signing in or out?</h1>
     <form id="signForm" action="/submit" method="POST">
         <input type="hidden" name="name" value="{{ name }}">
-        <input type="hidden" name="user_type" value="{{ user_type }}">
+        <input type="hidden" id="user-type-input" name="user_type" value="{{ user_type }}">
         <input type="hidden" id="action-input" name="action" value="">
         <input type="hidden" id="reason-input" name="reason" value="">
         <input type="hidden" name="grade" value="{{ grade }}">  <!-- Add the grade field if applicable -->
@@ -32,7 +32,7 @@
 
         <!-- Reason Field (hidden initially) -->
         <div id="reason-field">
-            <h3>Reason for Signing Out</h3>
+            <h3 id="reason-header">Reason for Signing Out</h3>
 
             <!-- Loop through the reasons and render them as buttons -->
             {% for reason in reasons %}
@@ -52,8 +52,18 @@
             <input type="text" id="visitor-reason-input" name="visitor-reason" placeholder="Enter your reason">
             <br>
             <label>And provide you phone number:</label>
-            <input type="text" id="visitor-phone-input" name="visitor-phone" placeholder="Enter your phone number" onkeydown="submitOnEnter(event)">
+            <input type="text" id="visitor-phone-input" name="visitor-phone" placeholder="Enter your phone number" onkeydown="submitVisitorOnEnter(event)">
         </div>
+
+        <!-- Expected Return Time -->
+         <div id="return-time">
+            <h3>What is your planned return time?</h3>
+            
+            <button type="button" class="reason-btn" onclick="setReturnTime('None')">None</button>
+            <br>
+            <label>Enter a time:</label>
+            <input type="text" id="return-time-input" name="return-time" placeholder="1:00p" onkeydown="submitTimeOnEnter(event)">
+         </div>
     </form>
 </body>
 </html>

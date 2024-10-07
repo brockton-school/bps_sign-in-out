@@ -57,6 +57,7 @@ def submit():
     other_reason = request.form.get('other_reason', '')
     visitor_reason = request.form.get('visitor-reason', '')
     visitor_phone = request.form.get('visitor-phone', '')
+    return_time = request.form.get('return-time', '')
 
     if other_reason:
         reason = other_reason
@@ -73,12 +74,12 @@ def submit():
 
     # Create or get the sheet and append the row
     worksheet = get_or_create_sheet(sheet_name)
-    worksheet.append_row([current_date, current_time_formatted, name, action, user_type, grade, reason, visitor_phone])
+    worksheet.append_row([current_date, current_time_formatted, name, action, user_type, grade, reason, visitor_phone, return_time])
 
     # Render the confirmation page after submission
     action_text = "Signed In" if action == "Signing In" else "Signed Out"
     confirmation_text = ""
-    if user_type == "Visitor":
+    if user_type == "Visitor" and action == "Signing In":
         confirmation_text = "Sign in successful, please report to the front office."
     else:
         confirmation_text = name + " Has Successfully " + action_text + "!"
