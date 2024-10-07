@@ -21,6 +21,7 @@ form {
     flex-direction: column;
     width: 100%;
     max-width: 600px;
+    position: relative;
 }
 
 button, input[type="text"] {
@@ -147,16 +148,23 @@ input[type="text"]:focus {
 }
 
 /* Styles for Autocomplete */
+/* Ensure the parent container has relative positioning */
+.autocomplete-container {
+    position: relative;
+    width: 100%;  /* Ensure the width matches the input field */
+}
+
+/* Position the autocomplete list directly below the input field */
 .autocomplete-items {
     position: absolute;
-    border: 1px solid #d4d4d4;
-    border-bottom: none;
-    border-top: none;
-    z-index: 99;
-    /* Position the autocomplete items to be below the input field */
-    top: 100%;
+    top: 100%; /* Aligns the list directly below the input field */
     left: 0;
     right: 0;
+    border: 1px solid #d4d4d4;
+    background-color: #fff;
+    z-index: 99;
+    max-height: 200px;
+    overflow-y: auto;  /* Scroll if the list gets too long */
 }
 
 .autocomplete-item {
@@ -166,12 +174,10 @@ input[type="text"]:focus {
     border-bottom: 1px solid #d4d4d4;
 }
 
-/* When hovering over an item */
 .autocomplete-item:hover {
     background-color: #e9e9e9;
 }
 
-/* When an item is selected */
 .autocomplete-item.active {
     background-color: #1e90ff;
     color: #fff;

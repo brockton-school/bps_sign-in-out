@@ -28,10 +28,14 @@
         <input type="hidden" name="grade" value="{{ grade }}">
         {% endif %}
         
-        <label for="name">Name:</label>
-        <input type="text" id="name-input" name="name" required oninput="fetchSuggestions('{{ user_type }}', '{{ grade|default('') }}')">
-        <div id="autocomplete-list" class="autocomplete-items"></div>
+        <label for="name">Begin typing your name and select from the list:</label>
+        <!-- Container for input and autocomplete suggestions -->
+        <div class="autocomplete-container">
+            <input type="text" id="name-input" name="guest-name" required oninput="fetchSuggestions('{{ user_type }}', '{{ grade|default('') }}')" autocomplete="off">
+            <div id="autocomplete-list" class="autocomplete-items"></div>
+        </div>
 
+        <!-- Submit button placed below the suggestions -->
         <button type="submit">Next</button>
     </form>
 </body>
