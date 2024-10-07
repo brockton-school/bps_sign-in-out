@@ -183,6 +183,30 @@ def get_or_create_sheet(sheet_name):
             }
         }
 
+        conditional_formatting_visitor = {
+            "addConditionalFormatRule": {
+                "rule": {
+                    "ranges": [
+                        {
+                            "sheetId": worksheet.id,
+                            "startColumnIndex": COLUMN_USER_TYPE,  # User Type column
+                            "endColumnIndex": COLUMN_USER_TYPE + 1
+                        }
+                    ],
+                    "booleanRule": {
+                        "condition": {
+                            "type": "TEXT_EQ",
+                            "values": [{"userEnteredValue": "Visitor"}]
+                        },
+                        "format": {
+                            "backgroundColor": {"red": 1, "green": 0.8, "blue": 0.9}  # Light pink
+                        }
+                    }
+                },
+                "index": 2
+            }
+        }
+
         # Apply the formatting requests and conditional formatting in a single batch update
         spreadsheet.batch_update({
             "requests": [
@@ -193,6 +217,7 @@ def get_or_create_sheet(sheet_name):
                 conditional_formatting_action,
                 conditional_formatting_sign_out,
                 conditional_formatting_user_type,
+                conditional_formatting_visitor,
                 conditional_formatting_student
             ]
         })
