@@ -11,4 +11,5 @@ services:
     volumes:
       - ${LOCAL_GOOGLE_CREDENTIALS_PATH}:${GOOGLE_CREDENTIALS_PATH}
       - ./grades.csv:/app/grades.csv  # Mount the CSV file inside the container
+      - ./env:/app/env  # Mount the CSV files into the container
 

@@ -1,4 +1,5 @@
 from flask import Blueprint, render_template, request, redirect, url_for
+from flask import jsonify
 from sheets import get_or_create_sheet
 from utils import format_time
 from datetime import datetime
@@ -17,6 +18,17 @@ def read_grades_from_csv(file_path):
         for row in reader:
             grades.append(row[0])
     return grades
+
+# Function to read names from the CSV file and return matches
+def get_name_suggestions(file_path, query):
+    suggestions = []
+    with open(file_path, 'r') as csvfile:
+        reader = csv.reader(csvfile)
+        for row in reader:
+            name = row[0]
+            if query.lower() in name.lower():
+                suggestions.append(name)
+    return suggestions
 
 @main_bp.route('/')
 def index():
@@ -87,3 +99,20 @@ def submit():
     return render_template('confirmation.html', confirmation_text=confirmation_text)
 
 
+# Auto complete API calls
+@main_bp.route('/autocomplete', methods=['GET'])
+def autocomplete():
+    query = request.args.get('query', '')
+    user_type = request.args.get('user_type', '')
+    grade = request.args.get('grade', '')
+
+    # Determine which CSV file to use based on user type and grade
+    if user_type == "Staff":
+        file_path = './env/staff.csv'
+    elif user_type == "Student" and grade:
+        file_path = f'./env/grade{grade}.csv'
+    else:
+        return jsonify([])  # Return an empty list if the file isn't found
+
+    suggestions = get_name_suggestions(file_path, query)
+    return jsonify(suggestions)
