@@ -15,10 +15,10 @@ function fetchSuggestions(userType, grade) {
         .then(data => {
             data.forEach(item => {
                 const suggestionItem = document.createElement('div');
-                suggestionItem.innerHTML = item;
+                suggestionItem.innerHTML = `<strong>${item}</strong>`;
                 suggestionItem.classList.add('autocomplete-item');
 
-                // When clicking on a suggestion, fill the input
+                // When clicking on a suggestion, fill the input and clear suggestions
                 suggestionItem.addEventListener('click', function () {
                     document.getElementById('name-input').value = item;
                     list.innerHTML = '';  // Clear suggestions after selecting
@@ -26,5 +26,8 @@ function fetchSuggestions(userType, grade) {
 
                 list.appendChild(suggestionItem);
             });
+        })
+        .catch(err => {
+            console.error('Error fetching suggestions:', err);
         });
 }
