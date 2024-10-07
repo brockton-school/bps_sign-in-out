@@ -93,8 +93,9 @@ This project is licensed under the MIT License.
 
 
 ## 📝 TODO
-- Staff Reason and Return Time
+- ~~Staff Reason and Return Time~~
 - ~~Students Grade~~ and prefilled names
 - Add Branding (Logo, and stuff)
 - Add Footer Identifying Build Version
+- ⚠️ Prevent blank submissions
 - Edit visitor sign out so user can select a previous entry and mark themselves as "out"
