@@ -99,3 +99,4 @@ This project is licensed under the MIT License.
 - Add Footer Identifying Build Version
 - ⚠️ Prevent blank submissions
 - Edit visitor sign out so user can select a previous entry and mark themselves as "out"
+- Track activity in the app to allow for "Sign Out" activity to be marked as "complete" when the user returns
