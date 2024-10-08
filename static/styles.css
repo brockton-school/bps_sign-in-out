@@ -125,7 +125,7 @@ input[type="text"]:focus {
     font-weight: bold;
 }
 
-/* Grid container for the grade buttons */
+/* Grid container for the grade (and student name) buttons */
 .grid-container {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));  /* Adjusts the number of columns based on screen size */
@@ -182,4 +182,17 @@ input[type="text"]:focus {
 .autocomplete-item.active {
     background-color: #1e90ff;
     color: #fff;
+}
+
+/* Student Name Entry Buttons */
+.name-btn {
+    width: 100%;
+    height: 100px;
+    background-color: #bb2023;
+    color: white;
+    border: none;
+    border-radius: 12px;
+    font-weight: bolder;
+    font-size: 18px;
+    cursor: pointer;
 }
