@@ -19,15 +19,23 @@ def read_grades_from_csv(file_path):
             grades.append(row[0])
     return grades
 
-# Function to read names from the CSV file and return matches
-def get_name_suggestions(file_path, query):
+# Function to get suggestions from the CSV file
+def get_personnel_suggestions(query, user_type, grade):
     suggestions = []
-    with open(file_path, 'r') as csvfile:
-        reader = csv.reader(csvfile)
+    with open('./env/personnel.csv', 'r') as csvfile:
+        reader = csv.DictReader(csvfile)
         for row in reader:
-            name = row[0]
-            if query.lower() in name.lower():
-                suggestions.append(name)
+            full_name = f"{row['NAME']} {row['SURNAME']}"
+            
+            # If the query matches the name
+            if query.lower() in full_name.lower():
+                # If user is Staff, suggest only those without a Class Level (staff)
+                if user_type == "Staff" and not row['CLASS LEVEL']:
+                    suggestions.append(full_name)
+                # If user is a Student, suggest those with matching Class Level
+                elif user_type == "Student" and row['CLASS LEVEL'] == grade:
+                    suggestions.append(full_name)
+
     return suggestions
 
 @main_bp.route('/')
@@ -106,13 +114,6 @@ def autocomplete():
     user_type = request.args.get('user_type', '')
     grade = request.args.get('grade', '')
 
-    # Determine which CSV file to use based on user type and grade
-    if user_type == "Staff":
-        file_path = './env/staff.csv'
-    elif user_type == "Student" and grade:
-        file_path = f'./env/grade{grade}.csv'
-    else:
-        return jsonify([])  # Return an empty list if the file isn't found
-
-    suggestions = get_name_suggestions(file_path, query)
+    # Fetch suggestions based on user type and grade
+    suggestions = get_personnel_suggestions(query, user_type, grade)
     return jsonify(suggestions)
