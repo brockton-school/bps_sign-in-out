@@ -54,8 +54,7 @@ def grade():
     grades = read_grades_from_csv('/app/grades.csv')  # Read grades from the mounted CSV file
     if request.method == 'POST':
         grade = request.form['grade']
-        name = request.form.get('guest-name', '')
-        return render_template('name.html', user_type="Student", grade=grade)  # Pass grade to next step
+        return render_template('student_name.html', user_type="Student", grade=grade)  # Pass grade to next step
     return render_template('grade.html', grades=grades)
 
 @main_bp.route('/signinout', methods=['POST'])
@@ -117,3 +116,18 @@ def autocomplete():
     # Fetch suggestions based on user type and grade
     suggestions = get_personnel_suggestions(query, user_type, grade)
     return jsonify(suggestions)
+
+@main_bp.route('/student_names', methods=['GET'])
+def student_names():
+    grade = request.args.get('grade', '')
+
+    # Read students from CSV
+    students = []
+    with open('./env/personnel.csv', 'r') as csvfile:
+        reader = csv.DictReader(csvfile)
+        for row in reader:
+            if row['CLASS LEVEL'] == grade:  # Only include students in the specified grade
+                full_name = f"{row['NAME']} {row['SURNAME']}"
+                students.append(full_name)
+
+    return jsonify(students)
