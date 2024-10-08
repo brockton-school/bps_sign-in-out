@@ -18,10 +18,13 @@ function fetchSuggestions(userType, grade) {
                 suggestionItem.innerHTML = `<strong>${item}</strong>`;
                 suggestionItem.classList.add('autocomplete-item');
 
-                // When clicking on a suggestion, fill the input and clear suggestions
+                // When clicking on a suggestion, fill the input, clear suggestions, and submit the form
                 suggestionItem.addEventListener('click', function () {
                     document.getElementById('name-input').value = item;
                     list.innerHTML = '';  // Clear suggestions after selecting
+
+                    // Automatically submit the form
+                    document.querySelector('form').submit();
                 });
 
                 list.appendChild(suggestionItem);
