@@ -69,18 +69,18 @@ function submitOnEnter(event) {
     }
 }
 
-// Function to set the return time when button is clicked
-function setReturnTime(time) {
+// Handle est return time
+
+// Set the selected return time to the hidden input
+function selectReturnTime(time) {
     document.getElementById('return-time-input').value = time;
+    document.getElementById('custom-time').value = '';  // Clear custom time if a button is clicked
     document.forms['signForm'].submit();
 }
 
-function submitTimeOnEnter(event) {
-    if (event.key === "Enter") {
-        event.preventDefault();  // Prevent the default form submission behavior
-        const otherTime = document.getElementById('return-time-input').value;
-        setReturnTime(otherTime);  // Set the time and submit the form
-    }
+// Set custom time to the hidden input when user selects a time
+function selectCustomTime(time) {
+    document.getElementById('return-time-input').value = time;
 }
 
 // Handle visitor info submission
