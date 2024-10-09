@@ -54,7 +54,7 @@ def grade():
     grades = read_grades_from_csv('/app/grades.csv')  # Read grades from the mounted CSV file
     if request.method == 'POST':
         grade = request.form['grade']
-        return render_template('student_name.html', user_type="Student", grade=grade)  # Pass grade to next step
+        return render_template('name.html', user_type="Student", grade=grade)  # Pass grade to next step
     return render_template('grade.html', grades=grades)
 
 @main_bp.route('/signinout', methods=['POST'])
