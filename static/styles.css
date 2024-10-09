@@ -7,7 +7,7 @@ body {
     justify-content: center;
     align-items: center;
     height: 100vh;
-    margin: 0;
+    margin: 10px;
     padding: 0;
 }
 
@@ -201,4 +201,62 @@ input[type="text"]:focus {
 
 form.student-name-form {
     max-width: 1000px;
+}
+
+/* Return Time Inputs */
+/* Make time buttons square */
+.time-buttons {
+    display: flex;
+    gap: 10px;  /* Space between buttons */
+    justify-content: center;
+    margin: 20px 0;
+}
+
+.time-btn {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 12px;
+    width: 80px;  /* Equal width and height to make them square */
+    height: 80px;
+    font-size: 16px;
+    cursor: pointer;
+    text-align: center;
+    line-height: 80px;  /* Align text vertically */
+}
+
+.time-btn:hover {
+    background-color: #45a049;
+}
+
+/* Custom time input styling */
+.custom-time-input {
+    display: block;
+    width: 100%;  /* Make the time input fill the width */
+    max-width: 400px;  /* Limit to a reasonable max width */
+    margin: 20px auto;
+    font-size: 18px;  /* Larger font for touch-friendly interaction */
+    padding: 10px;
+    border-radius: 12px;
+    border: 2px solid #ccc;
+    text-align: center;
+}
+
+
+.footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    background-color: #f1f1f1;
+    padding: 10px;
+    font-size: 14px;
+    color: #666;
+    border-top: 1px solid #ddd;
+    width: auto;
+    text-align: left;
+}
+
+.footer p {
+    margin: 0;
+    padding: 0;
 }

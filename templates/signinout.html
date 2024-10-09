@@ -21,6 +21,9 @@
         <input type="hidden" id="reason-input" name="reason" value="">
         <input type="hidden" name="grade" value="{{ grade }}">  <!-- Add the grade field if applicable -->
 
+        <!-- Hidden input to store the selected time -->
+        <input type="hidden" id="return-time-input" name="return_time" value="None">
+
         <!-- "X" Reset Button -->
         <a href="/" class="reset-btn">X</a>
 
@@ -57,12 +60,22 @@
 
         <!-- Expected Return Time -->
          <div id="return-time">
-            <h3>What is your planned return time?</h3>
-            
-            <button type="button" class="reason-btn" onclick="setReturnTime('None')">None</button>
-            <br>
-            <label>Enter a time:</label>
-            <input type="text" id="return-time-input" name="return-time" placeholder="1:00p" onkeydown="submitTimeOnEnter(event)">
+            <h3>Please provide your estimated time of return.</h3>
+
+            <!-- Buttons for quick time selection -->
+            <div class="time-buttons">
+                <button type="button" onclick="selectReturnTime('None')">None</button>
+                <button type="button" onclick="selectReturnTime('30min')">30min</button>
+                <button type="button" onclick="selectReturnTime('1 Hour')">1 Hour</button>
+                <button type="button" onclick="selectReturnTime('2 Hours')">2 Hours</button>
+            </div>
+
+            <!-- Custom time input field -->
+            <div>
+                <label for="custom-time">Or Select Custom Time:</label>
+                <input type="time" id="custom-time" name="custom_time" class="custom-time-input" onchange="selectCustomTime(this.value)">
+                <button type="submit">Submit</button>
+            </div>
          </div>
     </form>
 </body>

@@ -1,7 +1,7 @@
 from flask import Blueprint, render_template, request, redirect, url_for
 from flask import jsonify
 from sheets import get_or_create_sheet
-from utils import format_time
+from utils import format_time, get_git_info
 from datetime import datetime
 import pytz
 import os
@@ -40,7 +40,9 @@ def get_personnel_suggestions(query, user_type, grade):
 
 @main_bp.route('/')
 def index():
-    return render_template('index.html')
+    # Get the git information
+    commit_hash, version_tag = get_git_info()
+    return render_template('index.html', commit_hash=commit_hash, version_tag=version_tag)
 
 @main_bp.route('/name', methods=['POST'])
 def name():
@@ -76,7 +78,7 @@ def submit():
     other_reason = request.form.get('other_reason', '')
     visitor_reason = request.form.get('visitor-reason', '')
     visitor_phone = request.form.get('visitor-phone', '')
-    return_time = request.form.get('return-time', '')
+    return_time = request.form.get('return_time', '')
 
     if other_reason:
         reason = other_reason
