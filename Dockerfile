@@ -7,6 +7,14 @@ WORKDIR /app
 # Copy the current directory contents into the container
 COPY . /app
 
+# Set build-time arguments for Git info
+ARG GIT_COMMIT
+ARG GIT_VERSION
+
+# Set these as environment variables inside the container
+ENV COMMIT_HASH=$GIT_COMMIT
+ENV VERSION_TAG=$GIT_VERSION
+
 # Install any necessary dependencies
 RUN pip install -r requirements.txt
 
