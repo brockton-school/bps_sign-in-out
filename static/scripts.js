@@ -15,19 +15,20 @@ function handleAction(action, userType) {
     // Set the action in the form and handle the display of the reason field
     document.getElementById('action-input').value = action;
 
-    if (userType === "Student") {
+    header.style.display = "none"; // Hide the main header
+
+    if (userType === "Student" && action === "Signing Out") {
         reasonField.style.display = "block";
         actionButtons.style.display = "none";  // Hide the action buttons
-        if (action == "Signing In") {
-            document.getElementById("reason-header").innerText = "Reason for Sign In"
-        }
+        // if (action == "Signing In") {
+        //     document.getElementById("reason-header").innerText = "Reason for Sign In"
+        // }
     } else if (userType === "Staff" && action === "Signing Out") {
         reasonField.style.display = "block";
         actionButtons.style.display = "none";  // Hide the action buttons
     } else if (userType === "Visitor" && action === "Signing In") {
         visitorReasonField.style.display = "block";
         actionButtons.style.display = "none";  // Hide the Sign In/Out buttons
-        header.style.display = "none";
     } else {
         reasonField.style.display = "none";
         document.getElementById('reason-input').value = ""; // Clear any existing reason
