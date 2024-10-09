@@ -132,6 +132,8 @@ input[type="text"]:focus {
     gap: 10px;  /* Space between buttons */
     justify-items: center;  /* Center the buttons horizontally */
     margin: 20px 0;
+    max-height: 600px;
+    overflow-y: auto;
 }
 
 /* Grade button styles */
