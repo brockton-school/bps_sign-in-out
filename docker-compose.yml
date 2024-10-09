@@ -2,12 +2,18 @@ version: '3.7'
 
 services:
   bps-sign-in-out:
-    build: .
+    build:
+      context: .
+      args:
+        GIT_COMMIT: ${GIT_COMMIT}
+        GIT_VERSION: ${GIT_VERSION}
     ports:
       - "5000:5000"
     environment:
       - GOOGLE_SHEET_ID=${GOOGLE_SHEET_ID}
       - GOOGLE_CREDENTIALS_PATH=${GOOGLE_CREDENTIALS_PATH}
+      - COMMIT_HASH=${GIT_COMMIT}
+      - VERSION_TAG=${GIT_VERSION}
     volumes:
       - ${LOCAL_GOOGLE_CREDENTIALS_PATH}:${GOOGLE_CREDENTIALS_PATH}
       - ./grades.csv:/app/grades.csv  # Mount the CSV file inside the container
