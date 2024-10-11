@@ -5,7 +5,7 @@ from utils import format_time, get_git_info
 from datetime import datetime
 import pytz
 import os
-from config import SIGN_OUT_REASONS
+from config import SIGN_OUT_REASONS_STAFF, SIGN_OUT_REASONS_STUDENT
 import csv
 
 main_bp = Blueprint('main', __name__)
@@ -64,7 +64,14 @@ def signinout():
     name = request.form['guest-name']
     user_type = request.form['user_type']
     grade = request.form.get('grade', '')  # Capture the grade if available
-    return render_template('signinout.html', name=name, user_type=user_type, grade=grade, reasons=SIGN_OUT_REASONS)
+
+    reasons = []
+    if user_type == "Student":
+        reasons = SIGN_OUT_REASONS_STUDENT
+    else:
+        reasons = SIGN_OUT_REASONS_STAFF
+
+    return render_template('signinout.html', name=name, user_type=user_type, grade=grade, reasons=reasons)
 
 
 @main_bp.route('/submit', methods=['POST'])
@@ -77,6 +84,7 @@ def submit():
     reason = request.form.get('reason', '')
     other_reason = request.form.get('other_reason', '')
     visitor_reason = request.form.get('visitor-reason', '')
+    visitor_affiliation = request.form.get('visitor-affiliation', '')
     visitor_phone = request.form.get('visitor-phone', '')
     return_time = request.form.get('return_time', '')
 
@@ -84,6 +92,9 @@ def submit():
         reason = other_reason
     elif visitor_reason:
         reason = visitor_reason
+
+    if action == "Signing In":
+        return_time = ''
 
     # Get current time in Vancouver timezone
     vancouver_tz = pytz.timezone('America/Vancouver')
@@ -95,7 +106,7 @@ def submit():
 
     # Create or get the sheet and append the row
     worksheet = get_or_create_sheet(sheet_name)
-    worksheet.append_row([current_date, current_time_formatted, name, action, user_type, grade, reason, visitor_phone, return_time])
+    worksheet.append_row([current_date, current_time_formatted, name, action, user_type, grade, reason, return_time, visitor_phone, visitor_affiliation])
 
     # Render the confirmation page after submission
     action_text = "Signed In" if action == "Signing In" else "Signed Out"

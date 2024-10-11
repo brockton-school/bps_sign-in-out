@@ -12,15 +12,18 @@ COLUMN_ACTION = 3      # D
 COLUMN_USER_TYPE = 4   # E
 COLUMN_GRADE = 5       # F
 COLUMN_REASON = 6      # G
-COLUMN_PHONE = 7       # H
-COLUMN_RETURN_TIME = 8 # I
+COLUMN_RETURN_TIME = 7 # H
+COLUMN_PHONE = 8       # I
+COLUMN_AFFILIATION = 9 # J
 
-COLUMN_HEADERS_ARRAY = ["Date", "Time", "Name", "Action", "User Type", "Grade", "Reason", "Visitor Phone", "Return Time"]
+COLUMN_HEADERS_ARRAY = ["Date", "Time", "Name", "Action", "User Type", "Grade", "Reason", "Return Time", "Visitor Phone", "Visitor Affiliation"]
 
 COLUMNS_TOTAL = "9"
 
 # Define preset options for the "reason"
-SIGN_OUT_REASONS = ["Lunch", "Sick", "Appointment"]
+SIGN_OUT_REASONS_STAFF      = ["Lunch", "Sick", "Appointment", "Meeting", "Field Trip"]
+SIGN_OUT_REASONS_STUDENT    = ["Lunch", "Sick", "Appointment"]
+# Remember to send parent contact to school for sick, or appointment
 
 # Define preset Return Times
 DEFAULT_RETURN_TIMES = ["None"]

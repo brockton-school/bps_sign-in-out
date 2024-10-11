@@ -1,3 +1,17 @@
+function setupNamePage() {
+    const nameInput = document.getElementById("name-input");
+    const userType = document.getElementById("user-type-input");
+
+    nameInput.focus();
+    console.log(userType);
+    if (userType.value === "Visitor") {
+        document.getElementById("name-input-label").style.display = "none";
+        document.getElementById("name-submit-btn").style.display = "block";
+        document.getElementById("autocomplete-list").style.display = "none";
+    }   
+    //document.getElementById("name-input").focus();
+}
+
 function fetchSuggestions(userType, grade) {
     const input = document.getElementById('name-input').value;
     const list = document.getElementById('autocomplete-list');
