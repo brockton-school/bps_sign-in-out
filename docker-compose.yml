@@ -16,6 +16,7 @@ services:
       - VERSION_TAG=${GIT_VERSION}
     volumes:
       - ${LOCAL_GOOGLE_CREDENTIALS_PATH}:${GOOGLE_CREDENTIALS_PATH}
+      - ${LOCAL_DATA_PATH}:/app/data
       - ./grades.csv:/app/grades.csv  # Mount the CSV file inside the container
       - ./env:/app/env  # Mount the CSV files into the container
 

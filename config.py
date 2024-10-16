@@ -27,4 +27,7 @@ SIGN_OUT_REASONS_STUDENT    = ["Lunch", "Sick", "Appointment"]
 
 # Define preset Return Times
 DEFAULT_RETURN_TIMES = ["None"]
-# TODO: Set this up!!!
+
+# Define the path where LOCAL Excel files will be stored
+LOCAL_STORAGE_PATH = "/app/data"  # Adjust to your needs
+
