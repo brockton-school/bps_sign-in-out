@@ -2,6 +2,8 @@ import subprocess
 import os
 import csv
 
+from config import PERSONNEL_CSV_PATH
+
 def format_time(datetime_obj):
     """Formats a datetime object into a 12-hour time string."""
     return datetime_obj.strftime('%I:%M %p')
@@ -24,7 +26,7 @@ def read_grades_from_csv(file_path):
 # Function to get suggestions from the CSV file
 def get_personnel_suggestions(query, user_type, grade):
     suggestions = []
-    with open('./env/personnel.csv', 'r') as csvfile:
+    with open(PERSONNEL_CSV_PATH, 'r') as csvfile:
         reader = csv.DictReader(csvfile)
         for row in reader:
             full_name = f"{row['NAME']} {row['SURNAME']}"

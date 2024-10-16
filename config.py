@@ -4,6 +4,13 @@ import os
 GOOGLE_SHEET_ID = os.getenv('GOOGLE_SHEET_ID')
 GOOGLE_CREDENTIALS_PATH = os.getenv('GOOGLE_CREDENTIALS_PATH')
 
+PERSONNEL_CSV_PATH = "/app/env/personnel.csv"
+
+# This is random secure key for signing session data
+# This is used as part of the personnel.csv upload process
+# **NOTE** To generate a key `python -c "import secrets; print(secrets.token_hex(16))"`
+FLASK_SECRET_KEY = os.getenv('SECRET_KEY')
+
 # Define constants for column indices (0-based indexing)
 COLUMN_DATE = 0        # A
 COLUMN_TIME = 1        # B
