@@ -24,6 +24,9 @@ GIT_VERSION=$(git describe --tags --abbrev=0)
 export GIT_COMMIT
 export GIT_VERSION
 
+# generate and export a flask secret key, more on the what/why in config.py
+export FLASK_SECRET_KEY=$(python3 -c "import secrets; print(secrets.token_hex(16))")
+
 # Run docker-compose with the build arguments
 docker-compose build --build-arg GIT_COMMIT=$GIT_COMMIT --build-arg GIT_VERSION=$GIT_VERSION
 
