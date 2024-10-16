@@ -12,11 +12,16 @@
     <!-- Link to external JS scripts -->
     <script src="{{ url_for('static', filename='scripts.js') }}"></script>
 </head>
-<body onload="redirectToHome()">
+<body onload="redirectConfToHome()">
     <div class="confirmation-body">
         <div class="confirmation-message">
             {{ confirmation_text }}<br>
         </div>
+
+        <!-- Sub-message section (optional) -->
+        {% if sub_message %}
+        <p style="color: #555;">{{ sub_message }}</p>
+        {% endif %}
     </div>
 </body>
 </html>

@@ -32,9 +32,11 @@ SIGN_OUT_REASONS_STAFF      = ["Lunch", "Sick", "Appointment", "Meeting", "Field
 SIGN_OUT_REASONS_STUDENT    = ["Lunch", "Sick", "Appointment"]
 # Remember to send parent contact to school for sick, or appointment
 
-# Define preset Return Times
-DEFAULT_RETURN_TIMES = ["None"]
 
 # Define the path where LOCAL Excel files will be stored
 LOCAL_STORAGE_PATH = "/app/data"  # Adjust to your needs
+
+# Reminders shown to students on confirmation
+STUDENT_SIGN_OUT_MESSAGE = "Your parent must contact the school for illness or appointment related departures."
+STUDENT_SIGN_IN_MESSAGE = "Please remember to collect your Late Slip, if late for class."
 
