@@ -59,7 +59,7 @@
             <input type="text" id="visitor-affilitaion-input" name="visitor-affiliation" placeholder="Enter your reason">
             <br>
             <label>And provide your phone number:</label>
-            <input type="text" id="visitor-phone-input" name="visitor-phone" placeholder="Enter your phone number" onkeydown="submitVisitorOnEnter(event)">
+            <input type="text" id="visitor-phone-input" name="visitor-phone" placeholder="(604) 123-4567" pattern="^\(\d{3}\) \d{3}-\d{4}$" title="Phone number must be in the format: (123) 456-7890" onkeydown="submitVisitorOnEnter(event)">
         </div>
 
         <!-- Expected Return Time -->

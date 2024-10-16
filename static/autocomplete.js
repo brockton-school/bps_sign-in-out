@@ -10,6 +10,13 @@ function setupNamePage() {
         document.getElementById("autocomplete-list").style.display = "none";
     }   
     //document.getElementById("name-input").focus();
+
+    nameInput.addEventListener('keydown', function(e) {
+        // If the user presses Enter and the user type is student or staff, prevent form submission
+        if (e.key === 'Enter' && (userType.value === 'Student' || userType.value === 'Staff')) {
+            e.preventDefault();  // Prevent default form submission on Enter
+        }
+    });
 }
 
 function fetchSuggestions(userType, grade) {
@@ -21,6 +28,11 @@ function fetchSuggestions(userType, grade) {
 
     if (input.length < 2) {
         return;  // Start suggesting only when input has more than 2 characters
+    }
+
+    // Don't bother with API calls if visitor
+    if (userType === "Visitor") {
+        return;
     }
 
     // Fetch suggestions from the server
