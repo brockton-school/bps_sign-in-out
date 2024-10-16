@@ -1,42 +1,14 @@
 from flask import Blueprint, render_template, request, redirect, url_for
 from flask import jsonify
 from sheets import get_or_create_sheet
-from utils import format_time, get_git_info
+from utils import format_time, get_git_info, read_grades_from_csv, get_personnel_suggestions
 from datetime import datetime
 import pytz
-import os
 from config import SIGN_OUT_REASONS_STAFF, SIGN_OUT_REASONS_STUDENT
 import csv
 
 main_bp = Blueprint('main', __name__)
 
-# Function to read grades from the CSV file
-def read_grades_from_csv(file_path):
-    grades = []
-    with open(file_path, 'r') as csvfile:
-        reader = csv.reader(csvfile)
-        for row in reader:
-            grades.append(row[0])
-    return grades
-
-# Function to get suggestions from the CSV file
-def get_personnel_suggestions(query, user_type, grade):
-    suggestions = []
-    with open('./env/personnel.csv', 'r') as csvfile:
-        reader = csv.DictReader(csvfile)
-        for row in reader:
-            full_name = f"{row['NAME']} {row['SURNAME']}"
-            
-            # If the query matches the name
-            if query.lower() in full_name.lower():
-                # If user is Staff, suggest only those without a Class Level (staff)
-                if user_type == "Staff" and not row['CLASS LEVEL']:
-                    suggestions.append(full_name)
-                # If user is a Student, suggest those with matching Class Level
-                elif user_type == "Student" and row['CLASS LEVEL'] == grade:
-                    suggestions.append(full_name)
-
-    return suggestions
 
 @main_bp.route('/')
 def index():
