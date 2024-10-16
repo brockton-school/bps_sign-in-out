@@ -17,18 +17,21 @@ function handleAction(action, userType) {
 
     header.style.display = "none"; // Hide the main header
 
+    // This conditional is a bit of a mess... refactor this shiz...
+
     if (userType === "Student" && action === "Signing Out") {
         reasonField.style.display = "block";
         actionButtons.style.display = "none";  // Hide the action buttons
-        // if (action == "Signing In") {
-        //     document.getElementById("reason-header").innerText = "Reason for Sign In"
-        // }
     } else if (userType === "Staff" && action === "Signing Out") {
         reasonField.style.display = "block";
         actionButtons.style.display = "none";  // Hide the action buttons
     } else if (userType === "Visitor" && action === "Signing In") {
         visitorReasonField.style.display = "block";
         actionButtons.style.display = "none";  // Hide the Sign In/Out buttons
+
+        // make visitor specific stuff required
+        document.getElementById("visitor-reason-input").required = true;
+        document.getElementById("visitor-phone-input").required = true;
     } else {
         reasonField.style.display = "none";
         document.getElementById('reason-input').value = ""; // Clear any existing reason
