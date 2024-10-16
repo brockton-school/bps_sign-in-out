@@ -1,8 +1,13 @@
 // Redirect after 2 seconds (confirmation page)
-function redirectToHome() {
+function redirectConfToHome() {
     setTimeout(function() {
         window.location.href = "/";
-    }, 2000);
+    }, 5000);
+
+    // Redirect back to the root when the user clicks anywhere on the screen
+    document.body.addEventListener('click', function() {
+        window.location.href = '/';
+    });
 }
 
 // Show reason field if sign out or student sign in, and hide action buttons
