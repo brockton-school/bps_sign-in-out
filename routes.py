@@ -3,7 +3,7 @@ from sheets import get_or_create_sheet
 from utils import format_time, get_git_info, read_grades_from_csv, get_personnel_suggestions
 from datetime import datetime
 import pytz
-from config import SIGN_OUT_REASONS_STAFF, SIGN_OUT_REASONS_STUDENT, PERSONNEL_CSV_PATH, COLUMN_HEADERS_ARRAY
+from config import SIGN_OUT_REASONS_STAFF, SIGN_OUT_REASONS_STUDENT, PERSONNEL_CSV_PATH, COLUMN_HEADERS_ARRAY, STUDENT_SIGN_OUT_MESSAGE, STUDENT_SIGN_IN_MESSAGE
 import csv
 from excel import save_to_local_file
 
@@ -104,7 +104,15 @@ def submit():
     else:
         confirmation_text = name + " Has Successfully " + action_text + "!"
 
-    return render_template('confirmation.html', confirmation_text=confirmation_text)
+    # Set student reminders
+    sub_message = ""
+    if user_type == "Student":
+        if action == "Signing In":
+            sub_message = STUDENT_SIGN_IN_MESSAGE
+        else:
+            sub_message = STUDENT_SIGN_OUT_MESSAGE
+
+    return render_template('confirmation.html', confirmation_text=confirmation_text, sub_message=sub_message)
 
 
 # Auto complete API calls
