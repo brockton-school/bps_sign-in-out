@@ -4,8 +4,9 @@ from sheets import get_or_create_sheet
 from utils import format_time, get_git_info, read_grades_from_csv, get_personnel_suggestions
 from datetime import datetime
 import pytz
-from config import SIGN_OUT_REASONS_STAFF, SIGN_OUT_REASONS_STUDENT
+from config import SIGN_OUT_REASONS_STAFF, SIGN_OUT_REASONS_STUDENT, COLUMN_HEADERS_ARRAY
 import csv
+from excel import save_to_local_file
 
 main_bp = Blueprint('main', __name__)
 
@@ -76,9 +77,26 @@ def submit():
 
     sheet_name = current_date
 
+    # Dict for sheet data
+    entry = {
+        COLUMN_HEADERS_ARRAY[0]: current_date,
+        COLUMN_HEADERS_ARRAY[1]: current_time_formatted,
+        COLUMN_HEADERS_ARRAY[2]: name,
+        COLUMN_HEADERS_ARRAY[3]: action,
+        COLUMN_HEADERS_ARRAY[4]: user_type,
+        COLUMN_HEADERS_ARRAY[5]: grade,
+        COLUMN_HEADERS_ARRAY[6]: reason,
+        COLUMN_HEADERS_ARRAY[7]: return_time,
+        COLUMN_HEADERS_ARRAY[8]: visitor_phone,
+        COLUMN_HEADERS_ARRAY[9]: visitor_affiliation,
+    }
+
     # Create or get the sheet and append the row
     worksheet = get_or_create_sheet(sheet_name)
     worksheet.append_row([current_date, current_time_formatted, name, action, user_type, grade, reason, return_time, visitor_phone, visitor_affiliation])
+
+    # Save a local copy of data to XLSX doc
+    save_to_local_file(entry)
 
     # Render the confirmation page after submission
     action_text = "Signed In" if action == "Signing In" else "Signed Out"
