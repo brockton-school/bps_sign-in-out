@@ -1,15 +1,13 @@
-from flask import Blueprint, render_template, request, redirect, url_for
-from flask import jsonify
+from flask import Blueprint, render_template, request, redirect, url_for, jsonify, redirect, flash
 from sheets import get_or_create_sheet
 from utils import format_time, get_git_info, read_grades_from_csv, get_personnel_suggestions
 from datetime import datetime
 import pytz
-from config import SIGN_OUT_REASONS_STAFF, SIGN_OUT_REASONS_STUDENT, COLUMN_HEADERS_ARRAY
+from config import SIGN_OUT_REASONS_STAFF, SIGN_OUT_REASONS_STUDENT, COLUMN_HEADERS_ARRAY, PERSONNEL_CSV_PATH
 import csv
 from excel import save_to_local_file
 
 main_bp = Blueprint('main', __name__)
-
 
 @main_bp.route('/')
 def index():
@@ -134,3 +132,28 @@ def student_names():
                 students.append(full_name)
 
     return jsonify(students)
+
+@main_bp.route('/config')
+def config():
+    """Render the configuration page."""
+    return render_template('config.html')
+
+@main_bp.route('/upload_csv', methods=['POST'])
+def upload_csv():
+    """Handle CSV file upload and overwrite the existing personnel.csv."""
+    if 'file' not in request.files:
+        flash('No file part')
+        return redirect('/config')
+
+    file = request.files['file']
+    
+    # Check if the file is a valid CSV
+    if file.filename == '' or not file.filename.endswith('.csv'):
+        flash('Invalid file selected. Please upload a .csv file.')
+        return redirect('/config')
+
+    # Save the uploaded file and overwrite the existing personnel.csv
+    file.save(PERSONNEL_CSV_PATH)
+    flash('Personnel CSV uploaded successfully and overwritten.')
+
+    return redirect('/config')
