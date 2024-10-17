@@ -165,28 +165,3 @@ def upload_csv():
     flash('Personnel CSV uploaded successfully and overwritten.')
 
     return redirect('/config')
-
-@main_bp.route('/config')
-def config():
-    """Render the configuration page."""
-    return render_template('config.html')
-
-@main_bp.route('/upload_csv', methods=['POST'])
-def upload_csv():
-    """Handle CSV file upload and overwrite the existing personnel.csv."""
-    if 'file' not in request.files:
-        flash('No file part')
-        return redirect('/config')
-
-    file = request.files['file']
-    
-    # Check if the file is a valid CSV
-    if file.filename == '' or not file.filename.endswith('.csv'):
-        flash('Invalid file selected. Please upload a .csv file.')
-        return redirect('/config')
-
-    # Save the uploaded file and overwrite the existing personnel.csv
-    file.save(PERSONNEL_CSV_PATH)
-    flash('Personnel CSV uploaded successfully and overwritten.')
-
-    return redirect('/config')
