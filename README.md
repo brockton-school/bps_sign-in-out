@@ -108,9 +108,9 @@ This project is licensed under the MIT License.
 ## 📝 TODO
 - Add Branding (Logo, and stuff)
 - ~~Add Footer Identifying Build Version~~
-- ⚠️ Prevent blank submissions
+- ~~⚠️ Prevent blank submissions~~
 - Edit visitor sign out so user can select a previous entry and mark themselves as "out"
 - Track activity in the app to allow for "Sign Out" activity to be marked as "complete" when the user returns
-- Create a config page for easy name updating, and other details
+- ~~Create a config page for easy name updating, and other details~~
 - ~~Make reason text feild more promient~~
 - ~~Visitor name and organization~~
