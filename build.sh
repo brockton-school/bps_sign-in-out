@@ -1,5 +1,21 @@
 #!/bin/bash
 
+# Initialize a variable to track if the -d flag is set
+DETACHED=""
+
+# Parse command-line options
+while getopts ":d" opt; do
+  case ${opt} in
+    d )
+      DETACHED="-d"
+      ;;
+    \? )
+      echo "Invalid option: -$OPTARG" >&2
+      exit 1
+      ;;
+  esac
+done
+
 # Get the latest Git commit hash and version tag
 GIT_COMMIT=$(git rev-parse --short HEAD)
 GIT_VERSION=$(git describe --tags --abbrev=0)
@@ -10,4 +26,6 @@ export GIT_VERSION
 
 # Run docker-compose with the build arguments
 docker-compose build --build-arg GIT_COMMIT=$GIT_COMMIT --build-arg GIT_VERSION=$GIT_VERSION
-docker-compose up
+
+# Run docker-compose up with or without the -d flag
+docker-compose up $DETACHED
