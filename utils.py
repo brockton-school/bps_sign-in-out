@@ -41,3 +41,20 @@ def get_personnel_suggestions(query, user_type, grade):
                     suggestions.append(full_name)
 
     return suggestions
+
+# Function to load users from the CSV file
+def load_users_from_csv(filepath="users.csv"):
+    print(filepath)
+    users = {}
+    try:
+        with open(filepath, mode='r') as file:
+            reader = csv.reader(file)
+            for row in reader:
+                if len(row) == 2:
+                    username, hashed_password = row
+                    users[username] = hashed_password
+    except FileNotFoundError:
+        print(f"User credentials file not found: {filepath}")
+    return users
+
+USERS = load_users_from_csv()

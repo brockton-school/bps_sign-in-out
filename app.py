@@ -1,8 +1,9 @@
 from flask import Flask, request, Response
 from dotenv import load_dotenv
 import os
-from config import FLASK_SECRET_KEY
+from config import FLASK_SECRET_KEY, PATH_TO_USERS
 from werkzeug.security import check_password_hash
+from utils import load_users_from_csv
 
 # Load environment variables from .env file
 load_dotenv()
@@ -18,13 +19,18 @@ app.register_blueprint(main_bp)
 print("FLASK SECRET KEY THAT WILL BE SET" + FLASK_SECRET_KEY)
 app.secret_key = FLASK_SECRET_KEY
 
-USERNAME = os.getenv("AUTH_USERNAME")
-HASHED_PASSWORD = os.getenv("AUTH_PASSWORD")
-print(f"Username: {USERNAME}, Password Hash: {HASHED_PASSWORD}")
+# USERNAME = os.getenv("AUTH_USERNAME")
+# HASHED_PASSWORD = os.getenv("AUTH_PASSWORD")
 
+USERS = load_users_from_csv(PATH_TO_USERS)
+
+# Authentication function
 def check_auth(username, password):
-    
-    return username == USERNAME and check_password_hash(HASHED_PASSWORD, password)
+    hashed_password = USERS.get(username)
+    if not hashed_password:
+        return False
+    return check_password_hash(hashed_password, password)
+
 
 def authenticate():
     return Response(
