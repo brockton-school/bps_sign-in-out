@@ -6,3 +6,4 @@ werkzeug
 python-dotenv
 openpyxl
 pandas
+werkzeug
