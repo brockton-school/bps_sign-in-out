@@ -18,7 +18,7 @@ To export the necessary data from MySchool, follow these steps:
         - `Surname`
         - `Name`
         - `School Level`
-        - `Grade`
+        - `Class Level`
 4. **Export the File** from the button in the bottum right, and save it on your computer.
 
 ---
