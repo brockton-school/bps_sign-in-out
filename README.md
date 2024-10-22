@@ -67,6 +67,8 @@ LOCAL_DATA_PATH="FULL SYSTEM PATH TO LOCAL DATA STORE"
     ```
 3. Update `.env` file with your credentials and paths. Here you will also need to create a `env/` directory where you can store `personnel.csv` file ([instructions to create this file here](./docs/personnel-setup.md)), it is best practice to also use this directory for your Google Credentials JSON.
 
+4. Similarly, you will need to create a `user.csv` file. This can better be described as "accounts" as this document contains credentials devices can use to access the app, where as "users" are those logging there sign in/out activity in the app while its running, [instructions to setup accounts are here](./docs/accounts-setup.md).
+
 3. Update `docker-compose.yml` if needed to suit your production/development environment. This is where auto-restart, reverse proxies, etc. can be configured.
 
 4. Build the Docker container using the custom build script:
