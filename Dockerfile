@@ -11,9 +11,8 @@ COPY . /app
 ARG GIT_COMMIT
 ARG GIT_VERSION
 
-# Set these as environment variables inside the container
-ENV COMMIT_HASH=$GIT_COMMIT
-ENV VERSION_TAG=$GIT_VERSION
+# Write the vars to a text file
+RUN echo "Build Version: $GIT_VERSION ($GIT_COMMIT)" > /app/version_info.txt
 
 # Install any necessary dependencies
 RUN pip install -r requirements.txt

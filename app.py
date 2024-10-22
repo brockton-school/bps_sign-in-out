@@ -16,7 +16,7 @@ from routes import main_bp
 
 # Register the routes
 app.register_blueprint(main_bp)
-print("FLASK SECRET KEY THAT WILL BE SET" + FLASK_SECRET_KEY)
+print("FLASK SECRET KEY THAT WILL BE SET " + FLASK_SECRET_KEY)
 app.secret_key = FLASK_SECRET_KEY
 
 # USERNAME = os.getenv("AUTH_USERNAME")
