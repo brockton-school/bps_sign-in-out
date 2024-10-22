@@ -26,10 +26,11 @@ COLUMN_REASON = 6      # G
 COLUMN_RETURN_TIME = 7 # H
 COLUMN_PHONE = 8       # I
 COLUMN_AFFILIATION = 9 # J
+COLUMN_ACCOUNT = 10    # K
 
-COLUMN_HEADERS_ARRAY = ["Date", "Time", "Name", "Action", "User Type", "Grade", "Reason", "Return Time", "Visitor Phone", "Visitor Affiliation"]
+COLUMN_HEADERS_ARRAY = ["Date", "Time", "Name", "Action", "User Type", "Grade", "Reason", "Return Time", "Visitor Phone", "Visitor Affiliation", "Account"]
 
-COLUMNS_TOTAL = "9"
+COLUMNS_TOTAL = "10"
 
 # Define preset options for the "reason"
 SIGN_OUT_REASONS_STAFF      = ["Lunch", "Sick", "Appointment", "Meeting", "Field Trip"]

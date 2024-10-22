@@ -47,6 +47,11 @@ def signinout():
 
 @main_bp.route('/submit', methods=['POST'])
 def submit():
+    auth = request.authorization
+    account = "unknown"
+    if auth:
+        account = auth.username
+
     action = request.form['action']
     name = request.form['name']
     user_type = request.form['user_type']
@@ -87,11 +92,12 @@ def submit():
         COLUMN_HEADERS_ARRAY[7]: return_time,
         COLUMN_HEADERS_ARRAY[8]: visitor_phone,
         COLUMN_HEADERS_ARRAY[9]: visitor_affiliation,
+        COLUMN_HEADERS_ARRAY[10]: account
     }
 
     # Create or get the sheet and append the row
     worksheet = get_or_create_sheet(sheet_name)
-    worksheet.append_row([current_date, current_time_formatted, name, action, user_type, grade, reason, return_time, visitor_phone, visitor_affiliation])
+    worksheet.append_row([current_date, current_time_formatted, name, action, user_type, grade, reason, return_time, visitor_phone, visitor_affiliation, account])
 
     # Save a local copy of data to XLSX doc
     save_to_local_file(entry)
