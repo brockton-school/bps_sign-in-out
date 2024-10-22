@@ -4,7 +4,11 @@ import os
 GOOGLE_SHEET_ID = os.getenv('GOOGLE_SHEET_ID')
 GOOGLE_CREDENTIALS_PATH = os.getenv('GOOGLE_CREDENTIALS_PATH')
 
+# This is the school personnel list to populate names
 PERSONNEL_CSV_PATH = "/app/env/personnel.csv"
+
+# This is software access logins
+PATH_TO_USERS = "/app/env/users.csv"
 
 # This is random secure key for signing session data
 # This is used as part of the personnel.csv upload process
@@ -39,4 +43,3 @@ LOCAL_STORAGE_PATH = "/app/data"  # Adjust to your needs
 # Reminders shown to students on confirmation
 STUDENT_SIGN_OUT_MESSAGE = "Your parent must contact the school for illness or appointment related departures."
 STUDENT_SIGN_IN_MESSAGE = "Please remember to collect your Late Slip, if late for class."
-
