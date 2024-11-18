@@ -17,6 +17,7 @@
     <form id="signForm" action="/submit" method="POST">
         <input type="hidden" name="name" value="{{ name }}">
         <input type="hidden" id="user-type-input" name="user_type" value="{{ user_type }}">
+        <input type="hidden" id="reason-needed-input" name="reason-needed" value="{{ reason_needed }}">
         <input type="hidden" id="action-input" name="action" value="">
         <input type="hidden" id="reason-input" name="reason" value="">
         <input type="hidden" name="grade" value="{{ grade }}">  <!-- Add the grade field if applicable -->
@@ -29,8 +30,8 @@
 
         <!-- Sign In / Sign Out buttons -->
         <div id="action-buttons">
-            <button type="button" class="action-btn" onclick="handleAction('Signing In', '{{ user_type }}')">Signing In</button>
-            <button type="button" class="action-btn" onclick="handleAction('Signing Out', '{{ user_type }}')">Signing Out</button>
+            <button type="button" class="action-btn" onclick="handleAction('Signing In', '{{ user_type }}', '{{ reason_needed }}')">Signing In</button>
+            <button type="button" class="action-btn" onclick="handleAction('Signing Out', '{{ user_type }}', '{{ reason_needed }}')">Signing Out</button>
         </div>
 
         <!-- Reason Field (hidden initially) -->

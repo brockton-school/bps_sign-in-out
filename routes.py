@@ -1,6 +1,6 @@
 from flask import Blueprint, render_template, request, redirect, url_for, jsonify, redirect, flash
 from sheets import get_or_create_sheet
-from utils import format_time, get_version_info, read_grades_from_csv, get_personnel_suggestions
+from utils import format_time, get_version_info, read_grades_from_csv, get_personnel_suggestions, should_ask_reason_and_return_time
 from datetime import datetime
 import pytz
 from config import SIGN_OUT_REASONS_STAFF, SIGN_OUT_REASONS_STUDENT, PERSONNEL_CSV_PATH, COLUMN_HEADERS_ARRAY, STUDENT_SIGN_OUT_MESSAGE, STUDENT_SIGN_IN_MESSAGE
@@ -42,7 +42,9 @@ def signinout():
     else:
         reasons = SIGN_OUT_REASONS_STAFF
 
-    return render_template('signinout.html', name=name, user_type=user_type, grade=grade, reasons=reasons)
+    reason_needed = should_ask_reason_and_return_time(user_type)
+
+    return render_template('signinout.html', name=name, user_type=user_type, grade=grade, reasons=reasons, reason_needed=reason_needed)
 
 
 @main_bp.route('/submit', methods=['POST'])
