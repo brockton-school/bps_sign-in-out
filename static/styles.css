@@ -261,3 +261,19 @@ form.student-name-form {
     margin: 0;
     padding: 0;
 }
+
+/* laoding indicator for submit */
+.spinner {
+    margin: 10px auto;
+    width: 40px;
+    height: 40px;
+    border: 4px solid rgba(0, 0, 0, 0.1);
+    border-radius: 50%;
+    border-top-color: #bb2023;
+    animation: spin 1s ease-in-out infinite;
+}
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}

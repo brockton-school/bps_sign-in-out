@@ -41,6 +41,7 @@ function handleAction(action, userType) {
         reasonField.style.display = "none";
         document.getElementById('reason-input').value = ""; // Clear any existing reason
         document.forms['signForm'].submit();  // Automatically submit the form
+        showLoadingIndicator();
     }
 }
 
@@ -64,6 +65,7 @@ function setReason(reason) {
     } else {
         // Otherwise just submit...
         document.forms['signForm'].submit();
+        showLoadingIndicator();
     }
     
 }
@@ -84,6 +86,7 @@ function selectReturnTime(time) {
     document.getElementById('return-time-input').value = time;
     document.getElementById('custom-time').value = '';  // Clear custom time if a button is clicked
     document.forms['signForm'].submit();
+    showLoadingIndicator();
 }
 
 // Set custom time to the hidden input when user selects a time
@@ -95,5 +98,14 @@ function selectCustomTime(time) {
 function submitVisitorOnEnter(event) {
     if (event.key === "Enter") {
         document.forms['signForm'].submit();
+        showLoadingIndicator();
     }
+}
+
+// show loading progress
+function showLoadingIndicator() {
+    const form = document.getElementById("signForm"); // Replace with your form ID
+    const loadingIndicator = document.getElementById("loading-indicator");
+    loadingIndicator.style.display = "block";
+    form.style.display = "none"
 }
