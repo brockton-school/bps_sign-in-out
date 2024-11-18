@@ -2,6 +2,7 @@ import subprocess
 import os
 import csv
 
+from datetime import datetime
 from config import PERSONNEL_CSV_PATH
 
 def format_time(datetime_obj):
@@ -66,3 +67,11 @@ def load_users_from_csv(filepath="users.csv"):
     return users
 
 USERS = load_users_from_csv()
+
+# Helper for preventing reason when end of day sign out
+def should_ask_reason_and_return_time(user_type):
+    current_time = datetime.now().time()
+    cutoff_time = datetime.strptime("14:00", "%H:%M").time()  # 2 PM
+    if user_type == "Staff" and current_time > cutoff_time:
+        return "false"  # Don't ask for reason/return time
+    return "true"  # Ask for reason/return time

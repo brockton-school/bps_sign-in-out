@@ -11,7 +11,7 @@ function redirectConfToHome() {
 }
 
 // Show reason field if sign out or student sign in, and hide action buttons
-function handleAction(action, userType) {
+function handleAction(action, userType, reasonNeeded) {
     var reasonField = document.getElementById("reason-field");
     var actionButtons = document.getElementById("action-buttons");
     var visitorReasonField = document.getElementById("visitor-reason");
@@ -27,7 +27,7 @@ function handleAction(action, userType) {
     if (userType === "Student" && action === "Signing Out") {
         reasonField.style.display = "block";
         actionButtons.style.display = "none";  // Hide the action buttons
-    } else if (userType === "Staff" && action === "Signing Out") {
+    } else if (userType === "Staff" && action === "Signing Out" && reasonNeeded === "true") {
         reasonField.style.display = "block";
         actionButtons.style.display = "none";  // Hide the action buttons
     } else if (userType === "Visitor" && action === "Signing In") {
