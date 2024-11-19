@@ -64,6 +64,7 @@ def submit():
     visitor_reason = request.form.get('visitor-reason', '')
     visitor_affiliation = request.form.get('visitor-affiliation', '')
     visitor_phone = request.form.get('visitor-phone', '')
+    visitor_vehicle = request.form.get('visitor-vehicle', '')
     return_time = request.form.get('return_time', '')
 
     if other_reason:
@@ -94,12 +95,13 @@ def submit():
         COLUMN_HEADERS_ARRAY[7]: return_time,
         COLUMN_HEADERS_ARRAY[8]: visitor_phone,
         COLUMN_HEADERS_ARRAY[9]: visitor_affiliation,
-        COLUMN_HEADERS_ARRAY[10]: account
+        COLUMN_HEADERS_ARRAY[10]: visitor_vehicle,
+        COLUMN_HEADERS_ARRAY[11]: account
     }
 
     # Create or get the sheet and append the row
     worksheet = get_or_create_sheet(sheet_name)
-    worksheet.append_row([current_date, current_time_formatted, name, action, user_type, grade, reason, return_time, visitor_phone, visitor_affiliation, account])
+    worksheet.append_row([current_date, current_time_formatted, name, action, user_type, grade, reason, return_time, visitor_phone, visitor_affiliation, visitor_vehicle, account])
 
     # Save a local copy of data to XLSX doc
     save_to_local_file(entry)
