@@ -34,7 +34,7 @@ COLUMN_HEADERS_ARRAY = ["Date", "Time", "Name", "Action", "User Type", "Grade", 
 COLUMNS_TOTAL = "11"
 
 # Define preset options for the "reason"
-SIGN_OUT_REASONS_STAFF      = ["Lunch", "Sick", "Appointment", "Meeting", "Field Trip"]
+SIGN_OUT_REASONS_STAFF      = ["Lunch", "Sick", "Appointment", "Meeting", "Field Trip", "Going Home"]
 SIGN_OUT_REASONS_STUDENT    = ["Lunch", "Sick", "Appointment"]
 # Remember to send parent contact to school for sick, or appointment
 

@@ -27,12 +27,9 @@ function handleAction(action, userType, reasonNeeded) {
     if (userType === "Student" && action === "Signing Out") {
         reasonField.style.display = "block";
         actionButtons.style.display = "none";  // Hide the action buttons
-// NOTE: This is commented out to make a last minute change to just prevent staff from being asked a reason when signing out.
-// I'll need to look at fixing this so either the timing system works better or just add a seperate option for end of day,
-// Or better yet, just keep this change perminent and don't ask for signout reason.
-    // } else if (userType === "Staff" && action === "Signing Out" && reasonNeeded === "true") {
-    //     reasonField.style.display = "block";
-    //     actionButtons.style.display = "none";  // Hide the action buttons
+    } else if (userType === "Staff" && action === "Signing Out" && reasonNeeded === "true") {
+        reasonField.style.display = "block";
+        actionButtons.style.display = "none";  // Hide the action buttons
     } else if (userType === "Visitor" && action === "Signing In") {
         visitorReasonField.style.display = "block";
         actionButtons.style.display = "none";  // Hide the Sign In/Out buttons
