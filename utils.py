@@ -2,7 +2,8 @@ import subprocess
 import os
 import csv
 
-from datetime import datetime
+from datetime import datetime, time
+import pytz
 from config import PERSONNEL_CSV_PATH
 
 def format_time(datetime_obj):
@@ -70,8 +71,10 @@ USERS = load_users_from_csv()
 
 # Helper for preventing reason when end of day sign out
 def should_ask_reason_and_return_time(user_type):
-    current_time = datetime.now().time()
-    cutoff_time = datetime.strptime("22:00", "%H:%M").time()  # 2 PM
-    if user_type == "Staff" and current_time > cutoff_time:
+    # Get the current time in Vancouver
+    vancouver_tz = pytz.timezone("America/Vancouver")
+    vancouver_time = datetime.now(vancouver_tz).time()
+    cutoff_time = time(14, 0)  # 2:00 PM Vancouver time
+    if user_type == "Staff" and vancouver_time > cutoff_time:
         return "false"  # Don't ask for reason/return time
     return "true"  # Ask for reason/return time
