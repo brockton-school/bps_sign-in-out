@@ -1,7 +1,7 @@
 import gspread
 from google.oauth2.service_account import Credentials
 import os
-from config import COLUMN_HEADERS_ARRAY, COLUMN_DATE, COLUMN_ACTION, COLUMN_NAME, COLUMN_REASON, COLUMN_TIME, COLUMN_USER_TYPE, COLUMN_GRADE, COLUMN_PHONE, COLUMN_RETURN_TIME, COLUMNS_TOTAL
+from config import COLUMN_HEADERS_ARRAY, COLUMN_DATE, COLUMN_ACTION, COLUMN_NAME, COLUMN_REASON, COLUMN_TIME, COLUMN_USER_TYPE, COLUMN_GRADE, COLUMN_PHONE, COLUMN_RETURN_TIME, COLUMNS_TOTAL, COLUMN_CHECK
 
 SCOPES = ['https://www.googleapis.com/auth/spreadsheets']
 SERVICE_ACCOUNT_FILE = os.getenv('GOOGLE_CREDENTIALS_PATH')
@@ -207,6 +207,26 @@ def get_or_create_sheet(sheet_name):
             }
         }
 
+        checkbox_column_setup = {
+            'repeatCell': {
+                'range': {
+                    'sheetId': worksheet.id,
+                    'startColumnIndex': COLUMN_CHECK,  # Adjust the column index as needed
+                    'endColumnIndex': COLUMN_CHECK + 1
+                },
+                'cell': {
+                    'dataValidation': {
+                        'condition': {
+                            'type': 'BOOLEAN'
+                        },
+                        'strict': True,
+                        'showCustomUi': True
+                    }
+                },
+                'fields': 'dataValidation'
+            }
+        }
+
         # Apply the formatting requests and conditional formatting in a single batch update
         spreadsheet.batch_update({
             "requests": [
@@ -218,7 +238,8 @@ def get_or_create_sheet(sheet_name):
                 conditional_formatting_sign_out,
                 conditional_formatting_user_type,
                 conditional_formatting_visitor,
-                conditional_formatting_student
+                conditional_formatting_student,
+                checkbox_column_setup
             ]
         })
 
