@@ -1,7 +1,7 @@
 import gspread
 from google.oauth2.service_account import Credentials
 import os
-from config import COLUMN_HEADERS_ARRAY, COLUMN_DATE, COLUMN_ACTION, COLUMN_NAME, COLUMN_REASON, COLUMN_TIME, COLUMN_USER_TYPE, COLUMN_GRADE, COLUMN_PHONE, COLUMN_RETURN_TIME, COLUMNS_TOTAL, COLUMN_CHECK
+from config import COLUMN_HEADERS_ARRAY, COLUMN_DATE, COLUMN_ACTION, COLUMN_NAME, COLUMN_REASON, COLUMN_TIME, COLUMN_USER_TYPE, COLUMN_GRADE, COLUMN_PHONE, COLUMN_RETURN_TIME, COLUMNS_TOTAL, COLUMN_CHECK, COLUMNS_TOTAL_INT
 
 SCOPES = ['https://www.googleapis.com/auth/spreadsheets']
 SERVICE_ACCOUNT_FILE = os.getenv('GOOGLE_CREDENTIALS_PATH')
@@ -45,6 +45,20 @@ def get_or_create_sheet(sheet_name):
                     }
                 },
                 "fields": "gridProperties.frozenRowCount"
+            }
+        }
+
+        # Add sort buttons
+        sort_button_request = {
+            'setBasicFilter': {
+                'filter': {
+                    'range': {
+                        'sheetId': worksheet.id,
+                        'startRowIndex': 0,  # Header row starts at 0
+                        'startColumnIndex': 0,  # Start from the first column
+                        'endColumnIndex': COLUMNS_TOTAL_INT + 1  # Adjust based on your sheet's columns
+                    }
+                }
             }
         }
 
@@ -212,7 +226,8 @@ def get_or_create_sheet(sheet_name):
                 'range': {
                     'sheetId': worksheet.id,
                     'startColumnIndex': COLUMN_CHECK,  # Adjust the column index as needed
-                    'endColumnIndex': COLUMN_CHECK + 1
+                    'endColumnIndex': COLUMN_CHECK + 1,
+                    'startRowIndex': 1,  # Skip header row
                 },
                 'cell': {
                     'dataValidation': {
@@ -232,6 +247,7 @@ def get_or_create_sheet(sheet_name):
             "requests": [
                 bold_format,
                 freeze_row_request,
+                sort_button_request,
                 bold_name_time_columns,
                 bold_time_column,
                 conditional_formatting_action,
