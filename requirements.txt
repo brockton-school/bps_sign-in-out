@@ -7,3 +7,5 @@ python-dotenv
 openpyxl
 pandas
 werkzeug
+pymysql 
+SQLAlchemy
