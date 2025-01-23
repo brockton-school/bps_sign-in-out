@@ -6,8 +6,11 @@ import pytz
 from config import SIGN_OUT_REASONS_STAFF, SIGN_OUT_REASONS_STUDENT, PERSONNEL_CSV_PATH, COLUMN_HEADERS_ARRAY, STUDENT_SIGN_OUT_MESSAGE, STUDENT_SIGN_IN_MESSAGE
 import csv
 from excel import save_to_local_file
+from queries import log_sign_in
+from db_init import init_db
 
 main_bp = Blueprint('main', __name__)
+
 
 @main_bp.route('/')
 def index():
@@ -106,6 +109,28 @@ def submit():
     # Save a local copy of data to XLSX doc
     save_to_local_file(entry)
 
+    # Log data to SQL server
+    entry = {
+        "date": current_time,
+        "time": current_time.time(),
+        "firstName": name,
+        "lastName": name,
+        "userID": "",
+        "userType": user_type,
+        "action": action,
+        "grade": grade,
+        "reason": reason,
+        "returnTime": return_time,
+        "visitorPhone": visitor_phone,
+        "visitorAffiliation": visitor_affiliation,
+        "visitorLicensePlate": visitor_vehicle,
+        "account": account,
+        "confirmed": False,
+    }
+
+    from app import engine
+    log_sign_in(engine, entry)
+
     # Render the confirmation page after submission
     action_text = "Signed In" if action == "Signing In" else "Signed Out"
     confirmation_text = ""
@@ -175,3 +200,30 @@ def upload_csv():
     flash('Personnel CSV uploaded successfully and overwritten.')
 
     return redirect('/config')
+
+
+# API Route for posting sign-in activity
+@main_bp.route('/log', methods=['POST'])
+def log_data():
+    data = request.json  # Assuming data is sent as JSON
+    entry = {
+        "date": datetime.date.today(),
+        "time": datetime.datetime.now().time(),
+        "firstName": data["firstName"],
+        "lastName": data["lastName"],
+        "userID": data.get("userID"),
+        "userType": data["userType"],
+        "action": data["action"],
+        "grade": data.get("grade"),
+        "reason": data.get("reason"),
+        "returnTime": data.get("returnTime"),
+        "visitorPhone": data.get("visitorPhone"),
+        "visitorAffiliation": data.get("visitorAffiliation"),
+        "visitorLicensePlate": data.get("visitorLicensePlate"),
+        "account": data.get("account"),
+        "confirmed": data.get("confirmed", False),
+    }
+
+    from app import engine
+    log_sign_in(engine, entry)
+    return {"status": "success"}, 200
