@@ -25,6 +25,17 @@ logs_table = Table(
     Column("confirmed", Boolean, default=False),
 )
 
+personnel_table = Table(
+    "personnel",
+    metadata,
+    Column("id", Integer, primary_key=True, autoincrement=True),
+    Column("surname", String(100), nullable=False),
+    Column("name", String(100), nullable=False),
+    Column("school_level", String(50)),
+    Column("class_level", String(50)),
+    Column("msUserID", String(50))
+)
+
 def init_db(db_config):
     engine = create_engine(
         f"mysql+pymysql://{db_config['user']}:{db_config['password']}@{db_config['host']}:{db_config['port']}/{db_config['database']}",

@@ -3,7 +3,7 @@ from sheets import get_or_create_sheet
 from utils import format_time, get_version_info, read_grades_from_csv, get_personnel_suggestions, should_ask_reason_and_return_time
 from datetime import datetime
 import pytz
-from config import SIGN_OUT_REASONS_STAFF, SIGN_OUT_REASONS_STUDENT, PERSONNEL_CSV_PATH, COLUMN_HEADERS_ARRAY, STUDENT_SIGN_OUT_MESSAGE, STUDENT_SIGN_IN_MESSAGE
+from config import SIGN_OUT_REASONS_STAFF, SIGN_OUT_REASONS_STUDENT, PERSONNEL_CSV_PATH, COLUMN_HEADERS_ARRAY, STUDENT_SIGN_OUT_MESSAGE, STUDENT_SIGN_IN_MESSAGE, USER_TYPE_STAFF, USER_TYPE_STUDENT, USER_TYPE_VISITOR
 import csv
 from excel import save_to_local_file
 from queries import log_sign_in
@@ -21,7 +21,7 @@ def index():
 @main_bp.route('/name', methods=['POST'])
 def name():
     user_type = request.form['user_type']
-    if user_type == "Student":
+    if user_type == USER_TYPE_STUDENT:
         return redirect(url_for('main.grade'))  # Redirect to grade selection for students
     return render_template('name.html', user_type=user_type)  # Staff/Visitor flow remains the same
 
@@ -30,7 +30,7 @@ def grade():
     grades = read_grades_from_csv('/app/grades.csv')  # Read grades from the mounted CSV file
     if request.method == 'POST':
         grade = request.form['grade']
-        return render_template('name.html', user_type="Student", grade=grade)  # Pass grade to next step
+        return render_template('name.html', user_type=USER_TYPE_STUDENT, grade=grade)  # Pass grade to next step
     return render_template('grade.html', grades=grades)
 
 @main_bp.route('/signinout', methods=['POST'])
@@ -40,7 +40,7 @@ def signinout():
     grade = request.form.get('grade', '')  # Capture the grade if available
 
     reasons = []
-    if user_type == "Student":
+    if user_type == USER_TYPE_STUDENT:
         reasons = SIGN_OUT_REASONS_STUDENT
     else:
         reasons = SIGN_OUT_REASONS_STAFF
@@ -134,14 +134,14 @@ def submit():
     # Render the confirmation page after submission
     action_text = "Signed In" if action == "Signing In" else "Signed Out"
     confirmation_text = ""
-    if user_type == "Visitor" and action == "Signing In":
+    if user_type == USER_TYPE_VISITOR and action == "Signing In":
         confirmation_text = "Sign in successful, please report to the front office."
     else:
         confirmation_text = name + " Has Successfully " + action_text + "!"
 
     # Set student reminders
     sub_message = ""
-    if user_type == "Student":
+    if user_type == USER_TYPE_STUDENT:
         if action == "Signing In":
             sub_message = STUDENT_SIGN_IN_MESSAGE
         else:

@@ -47,3 +47,7 @@ LOCAL_STORAGE_PATH = "/app/data"  # Adjust to your needs
 # Reminders shown to students on confirmation
 STUDENT_SIGN_OUT_MESSAGE = "Your parent must contact the school for illness or appointment related departures."
 STUDENT_SIGN_IN_MESSAGE = "Please remember to collect your Late Slip, if late for class."
+
+USER_TYPE_STUDENT = "Student"
+USER_TYPE_STAFF = "Staff"
+USER_TYPE_VISITOR = "Visitor"
