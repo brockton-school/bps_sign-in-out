@@ -1,6 +1,6 @@
 from flask import Blueprint, render_template, request, redirect, url_for, jsonify, redirect, flash
 from sheets import get_or_create_sheet
-from utils import format_time, get_version_info, read_grades_from_csv, get_personnel_suggestions, should_ask_reason_and_return_time
+from utils import format_time, get_version_info, read_grades_from_csv, get_personnel_suggestions, should_ask_reason_and_return_time, get_school_level
 from datetime import datetime
 import pytz
 from config import SIGN_OUT_REASONS_STAFF, SIGN_OUT_REASONS_STUDENT, PERSONNEL_CSV_PATH, COLUMN_HEADERS_ARRAY, STUDENT_SIGN_OUT_MESSAGE, STUDENT_SIGN_IN_MESSAGE
@@ -67,6 +67,13 @@ def submit():
     visitor_vehicle = request.form.get('visitor-vehicle', '')
     return_time = request.form.get('return_time', '')
 
+    # Get staff classifications (JS/SS/Admin)
+    user_type_classified = ""
+    if user_type == "Staff":
+        user_type_classified = user_type + get_school_level(name)
+    else:
+        user_type_classified = user_type
+
     if other_reason:
         reason = other_reason
     elif visitor_reason:
@@ -89,7 +96,7 @@ def submit():
         COLUMN_HEADERS_ARRAY[1]: current_time_formatted,
         COLUMN_HEADERS_ARRAY[2]: name,
         COLUMN_HEADERS_ARRAY[3]: action,
-        COLUMN_HEADERS_ARRAY[4]: user_type,
+        COLUMN_HEADERS_ARRAY[4]: user_type_classified,
         COLUMN_HEADERS_ARRAY[5]: grade,
         COLUMN_HEADERS_ARRAY[6]: reason,
         COLUMN_HEADERS_ARRAY[7]: return_time,
@@ -101,7 +108,7 @@ def submit():
 
     # Create or get the sheet and append the row
     worksheet = get_or_create_sheet(sheet_name)
-    worksheet.append_row([current_date, current_time_formatted, name, action, user_type, grade, reason, return_time, visitor_phone, visitor_affiliation, visitor_vehicle, account])
+    worksheet.append_row([current_date, current_time_formatted, name, action, user_type_classified, grade, reason, return_time, visitor_phone, visitor_affiliation, visitor_vehicle, account])
 
     # Save a local copy of data to XLSX doc
     save_to_local_file(entry)

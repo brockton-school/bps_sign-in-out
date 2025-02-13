@@ -161,7 +161,7 @@ def get_or_create_sheet(sheet_name):
                     ],
                     "booleanRule": {
                         "condition": {
-                            "type": "TEXT_EQ",
+                            "type": "TEXT_CONTAINS",
                             "values": [{"userEnteredValue": "Staff"}]
                         },
                         "format": {

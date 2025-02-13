@@ -52,6 +52,28 @@ def get_personnel_suggestions(query, user_type, grade):
 
     return suggestions
 
+def get_school_level(full_name):
+    """
+    Given a full name in the format "NAME SURNAME", return the associated SCHOOL LEVEL.
+    If the SCHOOL LEVEL is blank or the name isn't found, return an empty string.
+    """
+    try:
+        with open(PERSONNEL_CSV_PATH, mode="r", encoding="utf-8") as file:
+            reader = csv.DictReader(file)
+            for row in reader:
+                # Construct the full name from "NAME" and "SURNAME" columns
+                csv_full_name = f"{row['NAME']} {row['SURNAME']}".strip()
+
+                if csv_full_name.lower() == full_name.lower():  # Case-insensitive comparison
+                    return row['SCHOOL LEVEL'].strip() if row['SCHOOL LEVEL'].strip() else ""
+
+    except FileNotFoundError:
+        print(f"Error: File not found at {PERSONNEL_CSV_PATH}")
+    except Exception as e:
+        print(f"Error: {e}")
+
+    return ""  # Return empty string if not found or SCHOOL LEVEL is blank
+
 # Function to load users from the CSV file
 def load_users_from_csv(filepath="users.csv"):
     print(filepath)
